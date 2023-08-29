@@ -6,7 +6,7 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/08/29 08:18:34 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/08/29 08:31:32 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ NAME = cub3d
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) inc/cub3d.h
 	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(FRAMEWORKS) $(GLFW) -o $(NAME)
 
 obj/%.o: %.c
