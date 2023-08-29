@@ -27,7 +27,7 @@ else
     echo "Skipping installation."
 fi
 
-git clone https://github.com/codam-coding-college/MLX42.git ~/goinfre/;
+git clone https://github.com/codam-coding-college/MLX42.git ~/goinfre/MLX42;
 cd ~/goinfre/MLX42;
 cmake -B build;
 make -C build -j4;

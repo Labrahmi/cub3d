@@ -4,6 +4,10 @@
         "mlx42.h": "c",
         "stdbool.h": "c",
         "cub3d.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c",
+        "vector": "c"
     }
 }

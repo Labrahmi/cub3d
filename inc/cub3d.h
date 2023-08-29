@@ -3,30 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/08/29 09:08:38 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/08/29 23:31:34 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "MLX42.h"
 
-#define HEIGHT 1024
-#define WIDTH (HEIGHT * 2)
+#define HEIGHT 512
+#define WIDTH 640
 
 typedef struct player_s
 {
-    float x_pos;
-    float y_pos;
+    mlx_image_t *img;
 }   player_t;
 
 typedef struct data_s
 {
-    player_t player;
-    mlx_image_t *map;
     mlx_t *mlx;
+    mlx_image_t *map;
+    player_t player;
+    char map_coords[8][10];
 }   data_t;
