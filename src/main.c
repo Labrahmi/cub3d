@@ -6,20 +6,14 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 07:30:15 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/08/29 07:44:14 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/08/29 08:18:18 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// -----------------------------------------------------------------------------
-// Codam Coding College, Amsterdam @ 2022-2023 by W2Wizard.
-// See README in the root project for more information.
-// -----------------------------------------------------------------------------
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-// #include <MLX42/MLX42.h>
-#include "/Users/ylabrahm/goinfre/MLX42/include/MLX42/MLX42.h"
+#include "MLX42.h"
 
 #define WIDTH 512
 #define HEIGHT 512
