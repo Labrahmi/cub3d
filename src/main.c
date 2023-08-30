@@ -3,111 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 07:30:15 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/08/29 23:59:58 by macbook          ###   ########.fr       */
+/*   Updated: 2023/08/30 19:38:33 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+void draw_player(data_t *data)
 {
-	return ((r << 24) | (g << 16) | (b << 8) | a);
+	int x, y, i, j;
+
+	x = data->player.x - (PLAYER_WIDTH);
+	y = data->player.y - (PLAYER_HEIGHT);
+	i = 0;
+	while (i < (PLAYER_HEIGHT * 2))
+	{
+		j = 0;
+		while (j < (PLAYER_WIDTH * 2))
+		{
+			mlx_put_pixel(data->minimap, (x + j), (y + i), ft_pixel(83, 171, 237, 255));
+			j++;
+		}
+		i++;
+	}
 }
 
-void draw_pixels_to_player(data_t *data)
+void draw_one_grid(data_t *data, int x, int y, int sq_color)
 {
-	int center_x = (data->player.img->width / 2);
-	int center_y = (data->player.img->height / 2);
-	int radius = center_x < center_y ? center_x : center_y;
-	for (int y = 0; y < data->player.img->height; y++)
+	int i = 1;
+	while (i < (GRID_HEIGHT - 1))
 	{
-		for (int x = 0; x < data->player.img->width; x++)
+		int j = 1;
+		while (j < (GRID_WIDTH - 1))
 		{
-			int dist_x = x - center_x;
-			int dist_y = y - center_y;
-			if (dist_x * dist_x + dist_y * dist_y <= radius * radius)
-			{
-				mlx_put_pixel(data->player.img, x, y, ft_pixel(176, 20, 0, 250));
-			}
+			mlx_put_pixel(data->minimap, (x + j), (y + i), sq_color);
+			j++;
 		}
+		i++;
 	}
 }
 
 void draw_pixels_to_map(data_t *data)
 {
-	mlx_image_t *square;
+	int r, c, x, y;
+	int sq_color;
 
+	r = 0;
+	while (r < ROWS)
 	{
-		int32_t sq_color = 0;
-		int i = 0;
-		while (i < 8)
+		c = 0;
+		while (c < COLUMNS)
 		{
-			int j = 0;
-			while (j < 10)
-			{
-				square = mlx_new_image(data->mlx, 64, 64);
-				if (data->map_coords[i][j] == '0') sq_color = ft_pixel(240, 240, 240, 100);
-				else sq_color = ft_pixel(64, 64, 64, 100);
-				for (size_t i = 0; i < square->height; i++)
-					for (size_t j = 0; j < square->width; j++)
-						mlx_put_pixel(square, i, j, sq_color);
-				mlx_image_to_window(data->mlx, square, j * 64, i * 64);
-				j++;
-			}
-			printf("\n");
-			i++;
+			sq_color = set_color(data->map_grid[r][c]);
+			draw_one_grid(data, (c * GRID_WIDTH), (r * GRID_HEIGHT), sq_color);
+			c++;
 		}
+		r++;
 	}
+	draw_player(data);
 }
 
 void ft_init(data_t *data)
 {
-	data->mlx = mlx_init(WIDTH, HEIGHT, "cub3d", false);
+	data->mlx = mlx_init(GAME_WIDTH, GAME_HEIGHT, "cub3d", false);
 	if (!(data->mlx))
 		exit(EXIT_FAILURE);
-	data->map = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	if (!(data->map))
-		exit(EXIT_FAILURE);
-	data->player.img = mlx_new_image(data->mlx, 64, 64);
-	if (!(data->player.img))
-		exit(EXIT_FAILURE);
-	// init map
-	char map_coords[8][10] = {
-		{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '1', '0', '0', '1', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '1', '0', '0', '0', '1', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+	data->minimap = mlx_new_image(data->mlx, GAME_WIDTH, GAME_HEIGHT);
+	// -
+	data->player.x = (GAME_WIDTH / 2);
+	data->player.y = (GAME_HEIGHT / 2);
+	data->player.rotation_angle = (Pi / 2);
+	// -
+	char map_grid[ROWS][COLUMNS] = {
+		{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
+		{'1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
+		{'1', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '1', '1', '0', '0', '1'},
+		{'1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
+		{'1', '0', '0', '0', '0', '1', '1', '1', '0', '0', '0', '1', '1', '0', '0', '1'},
+		{'1', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '0', '0', '1'},
+		{'1', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1'},
+		{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
 	};
-	memcpy(data->map_coords, map_coords, sizeof(map_coords));
-	// init map
-	draw_pixels_to_player(data);
+	memcpy(data->map_grid, map_grid, sizeof(map_grid));
+	// -
 	draw_pixels_to_map(data);
-	mlx_image_to_window(data->mlx, data->map, (data->mlx->width / 2), (data->mlx->height / 2));
-	mlx_image_to_window(data->mlx, data->player.img, (data->map->width / 2), (data->map->height / 2));
+	mlx_image_to_window(data->mlx, data->minimap, 0, 0);
 }
 
 void ft_move_player(void *param)
 {
 	data_t *data;
-
 	data = (data_t *)param;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(data->mlx);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_W))
-		data->player.img->instances[0].y -= 5;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_S))
-		data->player.img->instances[0].y += 5;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_A))
-		data->player.img->instances[0].x -= 5;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_D))
-		data->player.img->instances[0].x += 5;
 }
 
 int main(void)
@@ -119,5 +108,5 @@ int main(void)
 	mlx_loop_hook(data->mlx, ft_move_player, data);
 	mlx_loop(data->mlx);
 	mlx_terminate(data->mlx);
-	return (EXIT_SUCCESS);
+	return (free(data), EXIT_SUCCESS);
 }
