@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 23:33:13 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/01 00:45:34 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/01 01:24:05 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ void ft_turn_player(void *param)
     data_t *data;
     
     data = (data_t *)param;
-    data->player.rotation_speed = 0.1;
-    if (mlx_is_key_down(data->mlx, MLX_KEY_Q))
+    if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
         data->player.rotation_angle -= data->player.rotation_speed;
-    if (mlx_is_key_down(data->mlx, MLX_KEY_E))
+    if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
         data->player.rotation_angle += data->player.rotation_speed;
     // --------------
     if (data->player.rotation_angle < 0)
@@ -60,18 +59,26 @@ void ft_turn_player(void *param)
     draw_map(data);
 }
 
-void ft_close_game(void *param)
+void ft_general_hooks(void *param)
 {
     data_t *data;
 
     data = (data_t *)param;
     if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
         mlx_close_window(data->mlx);
+    if (mlx_is_key_down(data->mlx, MLX_KEY_Q))
+        data->player.move_speed += 1;
+    if (mlx_is_key_down(data->mlx, MLX_KEY_E))
+        data->player.move_speed -= 1;
+    if (mlx_is_key_down(data->mlx, MLX_KEY_Z))
+        data->player.rotation_speed += 0.01;
+    if (mlx_is_key_down(data->mlx, MLX_KEY_C))
+        data->player.rotation_speed -= 0.01;
 }
 
 void ft_hooks(data_t *data)
 {
     mlx_loop_hook(data->mlx, ft_move_player, data);
     mlx_loop_hook(data->mlx, ft_turn_player, data);
-    mlx_loop_hook(data->mlx, ft_close_game, data);
+    mlx_loop_hook(data->mlx, ft_general_hooks, data);
 }
