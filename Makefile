@@ -6,7 +6,7 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/08/31 23:33:55 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/09/01 01:34:44 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
 GLFW = -Iinclude -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
 # -L"/usr/local/Cellar/glfw" 
 # -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
-CFLAGS = -fsanitize=address -I/Users/$(USER)/goinfre/MLX42/include/MLX42 #-Wall -Wextra -Werror
+CFLAGS = -fsanitize=address -g -I/Users/$(USER)/goinfre/MLX42/include/MLX42 #-Wall -Wextra -Werror
 # -fsanitize=address
 
 NAME = cub3d
