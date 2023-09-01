@@ -6,42 +6,72 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/09/01 01:34:44 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/09/01 15:13:48 by ayakoubi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = src/main.c src/drawing_tools.c src/draw_map.c src/hooks.c
-OBJS := $(SRCS:.c=.o)
-OBJS := $(addprefix obj/, $(OBJS))
+NAME	=	cub3D
+INC		=	inc 
+IMLX	= -I /Users/$(USER)/goinfre/MLX42/include/MLX42
+########## COMMPILATION ##############
 
-CC = cc
-RM = rm -f
+CC		=	cc
+CFLAGS	=	-Wall -Wextra -Werror
 MLX = /Users/$(USER)/goinfre/MLX42/build/libmlx42.a
 FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
-GLFW = -Iinclude -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
+GLFW = -I include -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
 # -L"/usr/local/Cellar/glfw" 
 # -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
-CFLAGS = -fsanitize=address -g -I/Users/$(USER)/goinfre/MLX42/include/MLX42 #-Wall -Wextra -Werror
+#CFLAGS = -fsanitize=address -g #-Wall -Wextra -Werror
 # -fsanitize=address
+ARCH = /Users/ayakoubi/goinfre/MLX42/build/libmlx42.a
 
-NAME = cub3d
+######### SRCS & OBJS ###############
 
-all: $(NAME)
+SRCDIR	=	src
+OBJDIR	=	obj
 
-$(NAME): $(OBJS) inc/cub3d.h
-	$(CC) $(CFLAGS) $(OBJS) $(MLX) $(FRAMEWORKS) $(GLFW) -o $(NAME)
+SRC		:= main drawing_tools draw_map hooks
 
-obj/%.o: %.c
-	@mkdir -p $(shell dirname $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+OBJ		:= $(addprefix $(OBJDIR)/, $(addsuffix .o, $(SRC)))
+SRC		:=	$(addprefix $(SRCDIR)/, $(addsuffix .c , $(SRC)))
+
+########### COLORS ################
+
+RED = \033[1;31m
+GREEN = \033[1;32m
+SPLASH = \033[5m
+BLUE = \033[1;34m
+YELLOW = \033[1;33m
+RESET = \033[0m
+
+
+C_LIBFT		=	make -C libft
+C_PRINTF	=	make -C ft_printf
+C_GNL		=	make -C gnl
+AR_LIBFT	=	libft/libft.a
+AR_PRINTF	=	ft_printf/libftprintf.a
+AR_GNL		=	gnl/get_next_line
+
+$(OBJDIR)/%.o:	$(SRCDIR)/%.c 
+#	@echo "compile >>>>> $^"
+	@printf "$(GREEN) compile >>>>> $(notdir $<) $(RESET)\n"
+	@mkdir -p $(OBJDIR)
+	@$(CC) $(CFALGS) $< -c -I $(INC) $(IMLX) -o $@
+
+all:	$(NAME)
+
+$(NAME):	$(OBJ)
+	@$(CC) $(CFLAGS) $(MLX) $(FRAMEWORKS) $(GLFW) $^ $(ARCH) -I $(INC) $(IMLX) -o $@
+	@printf "\n\n$(SPLASH) $(RED)              ------------- Cub3D Ready -------------$(RESET)\n\n\n"
 
 clean:
-	$(RM) $(OBJS)
-	$(RM) -rf obj/
-
+	@rm -rf *.o
+	@rm -rf $(OBJDIR)
+	
 fclean: clean
-	$(RM) $(NAME)
+	@rm -rf $(NAME)
 
-re: fclean all
+re:	fclean all
 
-.PHONY: all clean fclean re
+.PHONY:	all clean fclean re
