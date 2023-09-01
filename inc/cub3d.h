@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/01 01:56:09 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/01 12:30:28 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@
 #include <math.h>
 #include "MLX42.h"
 
-#define GRID_HEIGHT 128
-#define GRID_WIDTH 128
+#define GRID_HEIGHT 50
+#define GRID_WIDTH 50
 
 #define COLUMNS 16
-#define ROWS 8
+#define ROWS 16
 
 #define GAME_HEIGHT (GRID_HEIGHT * ROWS)
 #define GAME_WIDTH (GRID_WIDTH * COLUMNS)
 
-#define PLAYER_HEIGHT 16
-#define PLAYER_WIDTH 16
+#define PLAYER_HEIGHT 10
+#define PLAYER_WIDTH 10
 
 #define Pi 3.14159265359
 
-#define FOV_ANGLE (40.0 * (M_PI / 180.0))  // 30 degrees in radians
+#define FOV_ANGLE (30.0 * (M_PI / 180.0))  // 30 degrees in radians
 
 typedef struct player_s
 {
