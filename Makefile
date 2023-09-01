@@ -6,11 +6,11 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/08/30 15:48:29 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/08/31 23:33:55 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = src/main.c src/drawing_tools.c
+SRCS = src/main.c src/drawing_tools.c src/draw_map.c src/hooks.c
 OBJS := $(SRCS:.c=.o)
 OBJS := $(addprefix obj/, $(OBJS))
 
