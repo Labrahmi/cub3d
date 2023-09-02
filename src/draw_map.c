@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/02 20:51:01 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/02 22:15:58 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,6 @@ int set_ray_color(ray_num, total_rays)
 		return (ft_pixel(192, 0, 0, 255));
 	else
 		return (ft_pixel(19, 37, 66, 255));
-}
-
-int is_corner_case(data_t *data, double x, double y)
-{
-	for (int i = 0; i < data->corner_count; i++)
-		if ((round(x) == (data->corners[i].x * GRID_WIDTH)) && (round(y) == (data->corners[i].y * GRID_HEIGHT)))
-			return 1;
-	return 0;
 }
 
 void draw_line_with_angle(data_t *data, double angle, int ray_num, int total_rays)

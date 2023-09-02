@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/02 20:54:22 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/02 22:16:26 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,7 @@
 
 #define Pi 3.14159265359
 
-#define FOV_ANGLE (20.0 * (M_PI / 180.0))
-
-typedef struct corner_s
-{
-    int x;
-    int y;
-} corner_t;
+#define FOV_ANGLE (30.0 * (M_PI / 180.0))
 
 typedef struct player_s
 {
@@ -55,9 +49,6 @@ typedef struct data_s
     mlx_image_t *minimap;
     player_t player;
     char map_grid[ROWS][COLUMNS];
-    corner_t corners[ROWS * COLUMNS];
-	int corner_count;
-    
 } data_t;
 
 // ----------------- Function Prototypes --------------------

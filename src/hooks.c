@@ -6,27 +6,21 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 23:33:13 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/02 17:12:17 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/02 22:42:00 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-// Function to check if a position is valid (not a wall and within map bounds)
 int is_valid_position(data_t *data, int x, int y)
 {
-    int gridX = x / GRID_WIDTH;
-    int gridY = y / GRID_HEIGHT;
-
-    // Check out-of-bounds
+    int gridX = (x / GRID_WIDTH);
+    int gridY = (y / GRID_HEIGHT);
     if ((gridX >= COLUMNS) || (gridY >= ROWS) || (gridX < 0) || (gridY < 0))
         return 0;
-
-    // Check if it's a wall
     if (data->map_grid[gridY][gridX] == '1')
         return 0;
-
-    return 1; // Valid position
+    return 1;
 }
 
 void ft_move_player(void *param)
@@ -41,7 +35,7 @@ void ft_move_player(void *param)
     {
         new_x = data->player.x + dx;
         new_y = data->player.y + dy;
-        if (is_valid_position(data, new_x, new_y))
+        if (is_valid_position(data, new_x, new_y) && is_valid_position(data, data->player.x, new_y) && is_valid_position(data, new_x, data->player.y))
         {
             data->player.x = new_x;
             data->player.y = new_y;
@@ -51,7 +45,7 @@ void ft_move_player(void *param)
     {
         new_x = data->player.x - dx;
         new_y = data->player.y - dy;
-        if (is_valid_position(data, new_x, new_y))
+        if (is_valid_position(data, new_x, new_y) && is_valid_position(data, data->player.x, new_y) && is_valid_position(data, new_x, data->player.y))
         {
             data->player.x = new_x;
             data->player.y = new_y;
@@ -61,7 +55,7 @@ void ft_move_player(void *param)
     {
         new_x = data->player.x - dy;
         new_y = data->player.y + dx;
-        if (is_valid_position(data, new_x, new_y))
+        if (is_valid_position(data, new_x, new_y) && is_valid_position(data, data->player.x, new_y) && is_valid_position(data, new_x, data->player.y))
         {
             data->player.x = new_x;
             data->player.y = new_y;
@@ -71,7 +65,7 @@ void ft_move_player(void *param)
     {
         new_x = data->player.x + dy;
         new_y = data->player.y - dx;
-        if (is_valid_position(data, new_x, new_y))
+        if (is_valid_position(data, new_x, new_y) && is_valid_position(data, data->player.x, new_y) && is_valid_position(data, new_x, data->player.y))
         {
             data->player.x = new_x;
             data->player.y = new_y;
@@ -79,7 +73,6 @@ void ft_move_player(void *param)
     }
     draw_map(data);
 }
-
 
 void ft_turn_player(void *param)
 {
