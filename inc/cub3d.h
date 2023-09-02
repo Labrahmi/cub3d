@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/02 22:16:26 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/02 22:44:33 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void draw_player(data_t *data);
 void draw_one_grid(data_t *data, int x, int y, int sq_color);
 void draw_pixels_to_map(data_t *data);
 void draw_map(data_t *data);
-void draw_line(data_t *data);
 
 // hooks()
 void ft_hooks(data_t *data);
