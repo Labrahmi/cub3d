@@ -6,28 +6,26 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/09/01 15:24:04 by ayakoubi         ###   ########.fr        #
+#    Updated: 2023/09/01 22:46:44 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	cub3D
-INC		=	inc 
+########## NAMES ##############
+NAME	= cub3D
+INC		= inc 
 IMLX	= -I /Users/$(USER)/goinfre/MLX42/include/MLX42
-########## COMMPILATION ##############
 
-CC		=	cc
-CFLAGS	=	-Wall -Wextra -Werror
+########## COMMPILATION ##############
+CC = cc
 MLX = /Users/$(USER)/goinfre/MLX42/build/libmlx42.a
 FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
 GLFW = -I include -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
+ARCH = /Users/$(USER)/goinfre/MLX42/build/libmlx42.a
 # -L"/usr/local/Cellar/glfw" 
 # -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
 #CFLAGS = -fsanitize=address -g #-Wall -Wextra -Werror
-# -fsanitize=address
-ARCH = /Users/$(USER)/goinfre/MLX42/build/libmlx42.a
 
 ######### SRCS & OBJS ###############
-
 SRCDIR	=	src
 OBJDIR	=	obj
 
@@ -54,7 +52,6 @@ AR_PRINTF	=	ft_printf/libftprintf.a
 AR_GNL		=	gnl/get_next_line
 
 $(OBJDIR)/%.o:	$(SRCDIR)/%.c 
-#	@echo "compile >>>>> $^"
 	@printf "$(GREEN) compile >>>>> $(notdir $<) $(RESET)\n"
 	@mkdir -p $(OBJDIR)
 	@$(CC) $(CFALGS) $< -c -I $(INC) $(IMLX) -o $@
@@ -63,7 +60,6 @@ all:	$(NAME)
 
 $(NAME):	$(OBJ)
 	@$(CC) $(CFLAGS) $(MLX) $(FRAMEWORKS) $(GLFW) $^ $(ARCH) -I $(INC) $(IMLX) -o $@
-	@printf "\n\n$(SPLASH) $(RED)              ------------- Cub3D Ready -------------$(RESET)\n\n\n"
 
 clean:
 	@rm -rf *.o

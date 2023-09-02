@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 23:33:13 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/01 12:26:12 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/02 17:12:17 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,15 @@ void ft_general_hooks(void *param)
     if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
         mlx_close_window(data->mlx);
     if (mlx_is_key_down(data->mlx, MLX_KEY_KP_ADD))
+    {
         data->player.move_speed += 1;
+        data->player.rotation_speed += 0.01;
+    }
     if (mlx_is_key_down(data->mlx, MLX_KEY_KP_SUBTRACT))
+    {
         data->player.move_speed -= 1;
+        data->player.rotation_speed -= 0.01;
+    }
 }
 
 void ft_hooks(data_t *data)

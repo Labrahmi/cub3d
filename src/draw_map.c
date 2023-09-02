@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/01 12:44:28 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/02 20:51:01 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,51 @@ int set_ray_color(ray_num, total_rays)
 		return (ft_pixel(19, 37, 66, 255));
 }
 
+int is_corner_case(data_t *data, double x, double y)
+{
+	for (int i = 0; i < data->corner_count; i++)
+		if ((round(x) == (data->corners[i].x * GRID_WIDTH)) && (round(y) == (data->corners[i].y * GRID_HEIGHT)))
+			return 1;
+	return 0;
+}
+
 void draw_line_with_angle(data_t *data, double angle, int ray_num, int total_rays)
 {
-	double x = (double)data->player.x;
-	double y = (double)data->player.y;
-	double end_x = x + (GAME_HEIGHT * GAME_WIDTH) * cos(angle);
-	double end_y = y + (GAME_HEIGHT * GAME_WIDTH) * sin(angle);
-	double dx = end_x - x;
-	double dy = end_y - y;
-	int steps = (int)(fabs(dx) > fabs(dy) ? fabs(dx) : fabs(dy));
-	double xIncrement = dx / steps;
-	double yIncrement = dy / steps;
-	int i = 0;
+	int i;
+	int steps;
+	double x;
+	double y;
+	double end_x;
+	double end_y;
+	double dx;
+	double dy;
+	double xIncrement;
+	double yIncrement;
+
+	x = (double)data->player.x;
+	y = (double)data->player.y;
+	end_x = x + (GAME_HEIGHT * GAME_WIDTH) * cos(angle);
+	end_y = y + (GAME_HEIGHT * GAME_WIDTH) * sin(angle);
+	dx = (end_x - x);
+	dy = (end_y - y);
+	steps = fabs(dy);
+	if (fabs(dx) > fabs(dy))
+		steps = fabs(dx);
+	xIncrement = (dx / steps);
+	yIncrement = (dy / steps);
+	i = 0;
 	while (i <= steps)
 	{
 		int gridX = round(x) / GRID_WIDTH;
 		int gridY = round(y) / GRID_HEIGHT;
+		// ---------- Corner Case Fix -------------
+		if (((y / GRID_WIDTH) > 0 && (x / GRID_WIDTH) > 0))
+			if (data->map_grid[(int)(y / GRID_WIDTH)][(int)(x / GRID_WIDTH)] == '1')
+				break;
+		if (data->map_grid[(int)((y + dy / steps) / GRID_WIDTH)][(int)(x / GRID_WIDTH)] == '1')
+			if (data->map_grid[(int)(y / GRID_WIDTH)][(int)((x + dx / steps) / GRID_WIDTH)] == '1')
+				break;
+		// -----------------------
 		if ((gridX >= 0) && (gridY >= 0) && (gridX < GAME_WIDTH) && (gridY < GAME_HEIGHT))
 		{
 			if (data->map_grid[gridY][gridX] == '1')
@@ -126,7 +155,7 @@ void draw_fov(data_t *data)
 {
 	double start_angle = data->player.rotation_angle - FOV_ANGLE;
 	double end_angle = data->player.rotation_angle + FOV_ANGLE;
-	double step = (M_PI / 180.0 / 16);
+	double step = (M_PI / 180.0 / 32);
 	int total_rays = (end_angle - start_angle) / step;
 	int ray_num = 0;
 	for (double angle = start_angle; angle <= end_angle; angle += step, ray_num++)

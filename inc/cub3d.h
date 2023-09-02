@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/01 12:30:28 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/02 20:54:22 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 #define GRID_HEIGHT 50
 #define GRID_WIDTH 50
 
-#define COLUMNS 16
-#define ROWS 16
+#define COLUMNS 21
+#define ROWS 11
 
 #define GAME_HEIGHT (GRID_HEIGHT * ROWS)
 #define GAME_WIDTH (GRID_WIDTH * COLUMNS)
@@ -32,7 +32,13 @@
 
 #define Pi 3.14159265359
 
-#define FOV_ANGLE (30.0 * (M_PI / 180.0))  // 30 degrees in radians
+#define FOV_ANGLE (20.0 * (M_PI / 180.0))
+
+typedef struct corner_s
+{
+    int x;
+    int y;
+} corner_t;
 
 typedef struct player_s
 {
@@ -41,7 +47,7 @@ typedef struct player_s
     int move_speed;
     double rotation_speed;
     double rotation_angle;
-}   player_t;
+} player_t;
 
 typedef struct data_s
 {
@@ -49,8 +55,10 @@ typedef struct data_s
     mlx_image_t *minimap;
     player_t player;
     char map_grid[ROWS][COLUMNS];
-}   data_t;
-
+    corner_t corners[ROWS * COLUMNS];
+	int corner_count;
+    
+} data_t;
 
 // ----------------- Function Prototypes --------------------
 
