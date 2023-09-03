@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/02 22:44:33 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/04 00:54:22 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,20 @@
 #include <math.h>
 #include "MLX42.h"
 
-#define GRID_HEIGHT 50
-#define GRID_WIDTH 50
-
-#define COLUMNS 21
-#define ROWS 11
-
-#define GAME_HEIGHT (GRID_HEIGHT * ROWS)
-#define GAME_WIDTH (GRID_WIDTH * COLUMNS)
-
-#define PLAYER_HEIGHT 10
-#define PLAYER_WIDTH 10
-
-#define Pi 3.14159265359
-
-#define FOV_ANGLE (30.0 * (M_PI / 180.0))
+#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 1280
+// --------
+#define GRID_HEIGHT 30
+#define GRID_WIDTH 30
+#define COLUMNS 10
+#define ROWS 8
+#define MAP_HEIGHT (GRID_HEIGHT * ROWS)
+#define MAP_WIDTH (GRID_WIDTH * COLUMNS)
+// --------
+#define PLAYER_HEIGHT 8
+#define PLAYER_WIDTH 8
+// --------
+#define FOV_ANGLE (60.0 * (M_PI / 180.0))
 
 typedef struct player_s
 {
@@ -46,10 +45,24 @@ typedef struct player_s
 typedef struct data_s
 {
     mlx_t *mlx;
-    mlx_image_t *minimap;
     player_t player;
+    mlx_image_t *minimap;
+    mlx_image_t *game;
     char map_grid[ROWS][COLUMNS];
 } data_t;
+
+typedef struct vect_s
+{
+    double x;
+    double y;
+}   vect_t;
+
+typedef struct hitRay_s
+{
+    double distance;
+    int h_v;
+}   hitRay_t;
+
 
 // ----------------- Function Prototypes --------------------
 
@@ -62,6 +75,15 @@ void draw_player(data_t *data);
 void draw_one_grid(data_t *data, int x, int y, int sq_color);
 void draw_pixels_to_map(data_t *data);
 void draw_map(data_t *data);
+void draw_fov(data_t *data);
 
 // hooks()
 void ft_hooks(data_t *data);
+
+
+// 3d
+double cast_ray(data_t *data, double angle);
+void draw_wall_column(data_t *data, vect_t v1, int columnHeight, int h_v);
+void draw_3d_walls(data_t *data, hitRay_t ray, int ray_num);
+void clear_screen(data_t *data);
+

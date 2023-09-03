@@ -6,7 +6,7 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/09/01 22:46:44 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/09/03 16:49:26 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ ARCH = /Users/$(USER)/goinfre/MLX42/build/libmlx42.a
 SRCDIR	=	src
 OBJDIR	=	obj
 
-SRC		:= main drawing_tools draw_map hooks
+SRC		:= main drawing_tools draw_map hooks draw_3d_walls
 
 OBJ		:= $(addprefix $(OBJDIR)/, $(addsuffix .o, $(SRC)))
 SRC		:=	$(addprefix $(SRCDIR)/, $(addsuffix .c , $(SRC)))

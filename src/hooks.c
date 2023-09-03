@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 23:33:13 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/02 22:43:43 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/03 18:28:29 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void ft_move_player(void *param)
             data->player.x = new_x;
             data->player.y = new_y;
         }
+        draw_map(data);
     }
     if (mlx_is_key_down(data->mlx, MLX_KEY_S))
     {
@@ -51,6 +52,7 @@ void ft_move_player(void *param)
             data->player.x = new_x;
             data->player.y = new_y;
         }
+        draw_map(data);
     }
     if (mlx_is_key_down(data->mlx, MLX_KEY_D))
     {
@@ -61,6 +63,7 @@ void ft_move_player(void *param)
             data->player.x = new_x;
             data->player.y = new_y;
         }
+        draw_map(data);
     }
     if (mlx_is_key_down(data->mlx, MLX_KEY_A))
     {
@@ -71,8 +74,8 @@ void ft_move_player(void *param)
             data->player.x = new_x;
             data->player.y = new_y;
         }
+        draw_map(data);
     }
-    draw_map(data);
 }
 
 void ft_turn_player(void *param)
@@ -81,15 +84,20 @@ void ft_turn_player(void *param)
 
     data = (data_t *)param;
     if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+    {
         data->player.rotation_angle -= data->player.rotation_speed;
+        draw_map(data);
+    }
     if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+    {
         data->player.rotation_angle += data->player.rotation_speed;
+        draw_map(data);
+    }
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - >
     if (data->player.rotation_angle < 0)
         data->player.rotation_angle += 2 * M_PI;
     else if (data->player.rotation_angle > 2 * M_PI)
         data->player.rotation_angle -= 2 * M_PI;
-    draw_map(data);
 }
 
 void ft_general_hooks(void *param)

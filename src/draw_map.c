@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/02 22:15:58 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/04 00:55:17 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,19 @@ void draw_player(data_t *data)
 
 	x_center = data->player.x;
 	y_center = data->player.y;
-
-	// Get the top-left starting position of the bounding square
 	x = data->player.x - PLAYER_WIDTH;
 	y = data->player.y - PLAYER_HEIGHT;
-
-	radius = (PLAYER_WIDTH < PLAYER_HEIGHT) ? PLAYER_WIDTH : PLAYER_HEIGHT; // Choose the smaller of the two dimensions
-
+	radius = (PLAYER_WIDTH < PLAYER_HEIGHT) ? PLAYER_WIDTH : PLAYER_HEIGHT;
 	i = 0;
 	while (i < (PLAYER_HEIGHT * 2))
 	{
 		j = 0;
 		while (j < (PLAYER_WIDTH * 2))
 		{
-			// Calculate the distance from the current point to the center of the circle
+
 			int dist_x = (x + j) - x_center;
 			int dist_y = (y + i) - y_center;
 
-			// If the point is inside the circle, draw it
 			if (dist_x * dist_x + dist_y * dist_y <= radius * radius)
 			{
 				mlx_put_pixel(data->minimap, (x + j), (y + i), ft_pixel(192, 0, 0, 255));
@@ -56,8 +51,8 @@ void draw_one_grid(data_t *data, int x, int y, int sq_color)
 		int j = 0;
 		while (j < (GRID_WIDTH))
 		{
-			if (i == 0 || j == 0)
-				mlx_put_pixel(data->minimap, (x + j), (y + i), ft_pixel(32, 32, 32, 255));
+			if ((i == 0) || (j == 0))
+				mlx_put_pixel(data->minimap, (x + j), (y + i), ft_pixel(115, 133, 117, 255));
 			else
 				mlx_put_pixel(data->minimap, (x + j), (y + i), sq_color);
 			j++;
@@ -93,70 +88,73 @@ int set_ray_color(ray_num, total_rays)
 		return (ft_pixel(19, 37, 66, 255));
 }
 
-void draw_line_with_angle(data_t *data, double angle, int ray_num, int total_rays)
+hitRay_t draw_line_with_angle(data_t *data, double angle, int mode)
 {
-	int i;
-	int steps;
-	double x;
-	double y;
-	double end_x;
-	double end_y;
-	double dx;
-	double dy;
-	double xIncrement;
-	double yIncrement;
+	int steps, gridX, gridY, nextGridX, nextGridY;
+	double x, y, end_x, end_y, dx, dy, xIncrement, yIncrement;
+	int lenght = 32;
+	int ray_color = ft_pixel(240, 0, 0, 255);
+	hitRay_t ray;
 
 	x = (double)data->player.x;
 	y = (double)data->player.y;
-	end_x = x + (GAME_HEIGHT * GAME_WIDTH) * cos(angle);
-	end_y = y + (GAME_HEIGHT * GAME_WIDTH) * sin(angle);
-	dx = (end_x - x);
-	dy = (end_y - y);
-	steps = fabs(dy);
-	if (fabs(dx) > fabs(dy))
-		steps = fabs(dx);
-	xIncrement = (dx / steps);
-	yIncrement = (dy / steps);
-	i = 0;
-	while (i <= steps)
+	if (mode == 1)
 	{
-		int gridX = round(x) / GRID_WIDTH;
-		int gridY = round(y) / GRID_HEIGHT;
-		// ---------- Corner Case Fix -------------
-		if (((y / GRID_WIDTH) > 0 && (x / GRID_WIDTH) > 0))
-			if (data->map_grid[(int)(y / GRID_WIDTH)][(int)(x / GRID_WIDTH)] == '1')
-				break;
-		if (data->map_grid[(int)((y + dy / steps) / GRID_WIDTH)][(int)(x / GRID_WIDTH)] == '1')
-			if (data->map_grid[(int)(y / GRID_WIDTH)][(int)((x + dx / steps) / GRID_WIDTH)] == '1')
-				break;
-		// -----------------------
-		if ((gridX >= 0) && (gridY >= 0) && (gridX < GAME_WIDTH) && (gridY < GAME_HEIGHT))
+		lenght = (MAP_HEIGHT * MAP_WIDTH);
+		ray_color = ft_pixel(19, 37, 66, 255);
+	}
+	end_x = x + (lenght) * cos(angle);
+	end_y = y + (lenght) * sin(angle);
+	dx = end_x - x;
+	dy = end_y - y;
+	steps = fabs(dx) > fabs(dy) ? fabs(dx) : fabs(dy);
+	xIncrement = dx / steps;
+	yIncrement = dy / steps;
+	ray.h_v = (xIncrement > yIncrement) ? 1 : 2;
+	for (int i = 0; i <= steps; i++)
+	{
+		gridX = round(x) / GRID_WIDTH;
+		gridY = round(y) / GRID_HEIGHT;
+		nextGridX = round(x + xIncrement) / GRID_WIDTH;
+		nextGridY = round(y + yIncrement) / GRID_HEIGHT;
+		if ((data->map_grid[nextGridY][gridX] == '1') && (data->map_grid[gridY][nextGridX] == '1'))
+			break;
+		if (gridX >= 0 && gridY >= 0 && gridX < MAP_WIDTH && gridY < MAP_HEIGHT)
 		{
 			if (data->map_grid[gridY][gridX] == '1')
 				break;
+			mlx_put_pixel(data->minimap, round(x), round(y), ray_color);
 		}
-		int ray_color = set_ray_color(ray_num, total_rays);
-		mlx_put_pixel(data->minimap, round(x), round(y), ray_color);
 		x += xIncrement;
 		y += yIncrement;
-		i++;
 	}
+	ray.distance = sqrt(pow(x - data->player.x, 2) + pow(y - data->player.y, 2));
+	return (ray);
 }
 
 void draw_fov(data_t *data)
 {
-	double start_angle = data->player.rotation_angle - FOV_ANGLE;
-	double end_angle = data->player.rotation_angle + FOV_ANGLE;
-	double step = (M_PI / 180.0 / 32);
-	int total_rays = (end_angle - start_angle) / step;
+	double start_angle = (data->player.rotation_angle - (FOV_ANGLE / 2));
+	double end_angle = (data->player.rotation_angle + (FOV_ANGLE / 2));
+	double step = (FOV_ANGLE / data->game->width); // M_PI / 180.0
+	double distance;
 	int ray_num = 0;
-	for (double angle = start_angle; angle <= end_angle; angle += step, ray_num++)
-		draw_line_with_angle(data, angle, ray_num, total_rays);
+	clear_screen(data);
+	for (double angle = start_angle; angle <= end_angle; angle += step)
+	{
+		hitRay_t ray;
+		ray = draw_line_with_angle(data, angle, 1);
+		ray.distance = ray.distance * cos(angle - data->player.rotation_angle);
+		draw_3d_walls(data, ray, ray_num);
+		ray_num++;
+	}
 }
+
 
 void draw_map(data_t *data)
 {
 	draw_pixels_to_map(data);
-	draw_fov(data);
 	draw_player(data);
+	draw_fov(data);
+	// exit(0);
 }
