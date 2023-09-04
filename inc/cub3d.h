@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/04 00:54:22 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:29:03 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,28 @@
 #include <math.h>
 #include "MLX42.h"
 
-#define SCREEN_HEIGHT 720
-#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT 1080
+#define SCREEN_WIDTH 2500
 // --------
 #define GRID_HEIGHT 30
 #define GRID_WIDTH 30
-#define COLUMNS 10
-#define ROWS 8
+#define COLUMNS 18
+#define ROWS 10
 #define MAP_HEIGHT (GRID_HEIGHT * ROWS)
 #define MAP_WIDTH (GRID_WIDTH * COLUMNS)
 // --------
-#define PLAYER_HEIGHT 8
-#define PLAYER_WIDTH 8
+#define PLAYER_HEIGHT 4
+#define PLAYER_WIDTH 4
 // --------
-#define FOV_ANGLE (60.0 * (M_PI / 180.0))
+#define FOV_ANGLE (70.0 * (M_PI / 180.0))
 
 typedef struct player_s
 {
     int x;
     int y;
     int move_speed;
-    double rotation_speed;
-    double rotation_angle;
+    float rotation_speed;
+    float rotation_angle;
 } player_t;
 
 typedef struct data_s
@@ -53,14 +53,14 @@ typedef struct data_s
 
 typedef struct vect_s
 {
-    double x;
-    double y;
+    float x;
+    float y;
 }   vect_t;
 
 typedef struct hitRay_s
 {
-    double distance;
-    int h_v;
+    float distance;
+    int is_horizontal;
 }   hitRay_t;
 
 
@@ -82,8 +82,8 @@ void ft_hooks(data_t *data);
 
 
 // 3d
-double cast_ray(data_t *data, double angle);
-void draw_wall_column(data_t *data, vect_t v1, int columnHeight, int h_v);
+float cast_ray(data_t *data, float angle);
+void draw_wall_column(data_t *data, vect_t v1, int columnHeight, hitRay_t ray);
 void draw_3d_walls(data_t *data, hitRay_t ray, int ray_num);
 void clear_screen(data_t *data);
 

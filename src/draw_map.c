@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/04 00:55:17 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:39:23 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,11 @@ void draw_player(data_t *data)
 		j = 0;
 		while (j < (PLAYER_WIDTH * 2))
 		{
-
 			int dist_x = (x + j) - x_center;
 			int dist_y = (y + i) - y_center;
-
 			if (dist_x * dist_x + dist_y * dist_y <= radius * radius)
 			{
-				mlx_put_pixel(data->minimap, (x + j), (y + i), ft_pixel(192, 0, 0, 255));
+				mlx_put_pixel(data->minimap, (x + j) * 0.5, (y + i) * 0.5, ft_pixel(192, 0, 0, 200));
 			}
 			j++;
 		}
@@ -52,9 +50,9 @@ void draw_one_grid(data_t *data, int x, int y, int sq_color)
 		while (j < (GRID_WIDTH))
 		{
 			if ((i == 0) || (j == 0))
-				mlx_put_pixel(data->minimap, (x + j), (y + i), ft_pixel(115, 133, 117, 255));
+				mlx_put_pixel(data->minimap, (x + j) * 0.5, (y + i) * 0.5, ft_pixel(115, 133, 117, 200));
 			else
-				mlx_put_pixel(data->minimap, (x + j), (y + i), sq_color);
+				mlx_put_pixel(data->minimap, (x + j) * 0.5, (y + i) * 0.5, sq_color);
 			j++;
 		}
 		i++;
@@ -83,25 +81,26 @@ void draw_pixels_to_map(data_t *data)
 int set_ray_color(ray_num, total_rays)
 {
 	if ((ray_num < 20) || (ray_num > (total_rays - 20)))
-		return (ft_pixel(192, 0, 0, 255));
+		return (ft_pixel(192, 0, 0, 200));
 	else
-		return (ft_pixel(19, 37, 66, 255));
+		return (ft_pixel(19, 37, 66, 200));
 }
 
-hitRay_t draw_line_with_angle(data_t *data, double angle, int mode)
+
+hitRay_t draw_line_with_angle(data_t *data, float angle, int mode)
 {
 	int steps, gridX, gridY, nextGridX, nextGridY;
-	double x, y, end_x, end_y, dx, dy, xIncrement, yIncrement;
+	float x, y, end_x, end_y, dx, dy, xIncrement, yIncrement;
 	int lenght = 32;
-	int ray_color = ft_pixel(240, 0, 0, 255);
+	int ray_color = ft_pixel(240, 0, 0, 200);
 	hitRay_t ray;
 
-	x = (double)data->player.x;
-	y = (double)data->player.y;
+	x = (float) data->player.x;
+	y = (float) data->player.y;
 	if (mode == 1)
 	{
 		lenght = (MAP_HEIGHT * MAP_WIDTH);
-		ray_color = ft_pixel(19, 37, 66, 255);
+		ray_color = ft_pixel(19, 37, 66, 200);
 	}
 	end_x = x + (lenght) * cos(angle);
 	end_y = y + (lenght) * sin(angle);
@@ -110,7 +109,7 @@ hitRay_t draw_line_with_angle(data_t *data, double angle, int mode)
 	steps = fabs(dx) > fabs(dy) ? fabs(dx) : fabs(dy);
 	xIncrement = dx / steps;
 	yIncrement = dy / steps;
-	ray.h_v = (xIncrement > yIncrement) ? 1 : 2;
+	ray.is_horizontal = 1;
 	for (int i = 0; i <= steps; i++)
 	{
 		gridX = round(x) / GRID_WIDTH;
@@ -123,7 +122,7 @@ hitRay_t draw_line_with_angle(data_t *data, double angle, int mode)
 		{
 			if (data->map_grid[gridY][gridX] == '1')
 				break;
-			mlx_put_pixel(data->minimap, round(x), round(y), ray_color);
+			mlx_put_pixel(data->minimap, ((int )round(x) * 0.5), ((int )round(y) * 0.5), ray_color);
 		}
 		x += xIncrement;
 		y += yIncrement;
@@ -134,15 +133,15 @@ hitRay_t draw_line_with_angle(data_t *data, double angle, int mode)
 
 void draw_fov(data_t *data)
 {
-	double start_angle = (data->player.rotation_angle - (FOV_ANGLE / 2));
-	double end_angle = (data->player.rotation_angle + (FOV_ANGLE / 2));
-	double step = (FOV_ANGLE / data->game->width); // M_PI / 180.0
-	double distance;
+	float start_angle = (data->player.rotation_angle - (FOV_ANGLE / 2));
+	float end_angle = (data->player.rotation_angle + (FOV_ANGLE / 2));
+	float step = (FOV_ANGLE / data->game->width); // M_PI / 180.0
+	float distance;
+	hitRay_t ray;
 	int ray_num = 0;
 	clear_screen(data);
-	for (double angle = start_angle; angle <= end_angle; angle += step)
+	for (float angle = start_angle; angle <= end_angle; angle += step)
 	{
-		hitRay_t ray;
 		ray = draw_line_with_angle(data, angle, 1);
 		ray.distance = ray.distance * cos(angle - data->player.rotation_angle);
 		draw_3d_walls(data, ray, ray_num);
@@ -150,11 +149,9 @@ void draw_fov(data_t *data)
 	}
 }
 
-
 void draw_map(data_t *data)
 {
 	draw_pixels_to_map(data);
 	draw_player(data);
 	draw_fov(data);
-	// exit(0);
 }
