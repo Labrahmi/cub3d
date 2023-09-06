@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/04 20:29:03 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/06 01:22:23 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,25 @@
 #include <math.h>
 #include "MLX42.h"
 
-#define SCREEN_HEIGHT 1080
-#define SCREEN_WIDTH 2500
+#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 1280
 // --------
-#define GRID_HEIGHT 30
-#define GRID_WIDTH 30
+#define GRID_HEIGHT 32
+#define GRID_WIDTH 32
 #define COLUMNS 18
 #define ROWS 10
 #define MAP_HEIGHT (GRID_HEIGHT * ROWS)
 #define MAP_WIDTH (GRID_WIDTH * COLUMNS)
 // --------
-#define PLAYER_HEIGHT 4
-#define PLAYER_WIDTH 4
+#define PLAYER_HEIGHT 6
+#define PLAYER_WIDTH 6
 // --------
-#define FOV_ANGLE (70.0 * (M_PI / 180.0))
+#define FOV_ANGLE (60.0)
 
 typedef struct player_s
 {
-    int x;
-    int y;
+    float x;
+    float y;
     int move_speed;
     float rotation_speed;
     float rotation_angle;

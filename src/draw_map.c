@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/04 20:39:23 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/06 01:22:52 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void draw_player(data_t *data)
 			int dist_y = (y + i) - y_center;
 			if (dist_x * dist_x + dist_y * dist_y <= radius * radius)
 			{
-				mlx_put_pixel(data->minimap, (x + j) * 0.5, (y + i) * 0.5, ft_pixel(192, 0, 0, 200));
+				mlx_put_pixel(data->minimap, (x + j), (y + i), ft_pixel(192, 0, 0, 200));
 			}
 			j++;
 		}
@@ -50,9 +50,9 @@ void draw_one_grid(data_t *data, int x, int y, int sq_color)
 		while (j < (GRID_WIDTH))
 		{
 			if ((i == 0) || (j == 0))
-				mlx_put_pixel(data->minimap, (x + j) * 0.5, (y + i) * 0.5, ft_pixel(115, 133, 117, 200));
+				mlx_put_pixel(data->minimap, (x + j), (y + i), ft_pixel(115, 133, 117, 200));
 			else
-				mlx_put_pixel(data->minimap, (x + j) * 0.5, (y + i) * 0.5, sq_color);
+				mlx_put_pixel(data->minimap, (x + j), (y + i), sq_color);
 			j++;
 		}
 		i++;
@@ -86,43 +86,42 @@ int set_ray_color(ray_num, total_rays)
 		return (ft_pixel(19, 37, 66, 200));
 }
 
-
 hitRay_t draw_line_with_angle(data_t *data, float angle, int mode)
 {
-	int steps, gridX, gridY, nextGridX, nextGridY;
-	float x, y, end_x, end_y, dx, dy, xIncrement, yIncrement;
+	int gridX, gridY, nextGridX, nextGridY;
+	float x, y, end_x, end_y, dx, dy, xIncrement, yIncrement, steps;
 	int lenght = 32;
 	int ray_color = ft_pixel(240, 0, 0, 200);
 	hitRay_t ray;
 
-	x = (float) data->player.x;
-	y = (float) data->player.y;
+	x = (float)data->player.x;
+	y = (float)data->player.y;
 	if (mode == 1)
 	{
 		lenght = (MAP_HEIGHT * MAP_WIDTH);
 		ray_color = ft_pixel(19, 37, 66, 200);
 	}
-	end_x = x + (lenght) * cos(angle);
-	end_y = y + (lenght) * sin(angle);
+	end_x = x + ((lenght) * cos(angle * (M_PI / 180.0)));
+	end_y = y + ((lenght) * sin(angle * (M_PI / 180.0)));
 	dx = end_x - x;
 	dy = end_y - y;
-	steps = fabs(dx) > fabs(dy) ? fabs(dx) : fabs(dy);
-	xIncrement = dx / steps;
-	yIncrement = dy / steps;
+	steps = (fabs(dx) > fabs(dy)) ? fabs(dx) : fabs(dy);
+	xIncrement = (dx / steps) / 16;
+	yIncrement = (dy / steps) / 16;
 	ray.is_horizontal = 1;
 	for (int i = 0; i <= steps; i++)
 	{
-		gridX = round(x) / GRID_WIDTH;
-		gridY = round(y) / GRID_HEIGHT;
-		nextGridX = round(x + xIncrement) / GRID_WIDTH;
-		nextGridY = round(y + yIncrement) / GRID_HEIGHT;
+		gridX = (x / GRID_WIDTH);
+		gridY = (y / GRID_HEIGHT);
+		nextGridX = (x + xIncrement) / GRID_WIDTH;
+		nextGridY = (y + yIncrement) / GRID_HEIGHT;
 		if ((data->map_grid[nextGridY][gridX] == '1') && (data->map_grid[gridY][nextGridX] == '1'))
 			break;
 		if (gridX >= 0 && gridY >= 0 && gridX < MAP_WIDTH && gridY < MAP_HEIGHT)
 		{
 			if (data->map_grid[gridY][gridX] == '1')
 				break;
-			mlx_put_pixel(data->minimap, ((int )round(x) * 0.5), ((int )round(y) * 0.5), ray_color);
+			mlx_put_pixel(data->minimap, x, y, ray_color);
 		}
 		x += xIncrement;
 		y += yIncrement;
@@ -143,7 +142,7 @@ void draw_fov(data_t *data)
 	for (float angle = start_angle; angle <= end_angle; angle += step)
 	{
 		ray = draw_line_with_angle(data, angle, 1);
-		ray.distance = ray.distance * cos(angle - data->player.rotation_angle);
+		ray.distance = ray.distance * cos((angle - data->player.rotation_angle) * (M_PI / 180.0));
 		draw_3d_walls(data, ray, ray_num);
 		ray_num++;
 	}

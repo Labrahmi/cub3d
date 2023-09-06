@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 23:33:13 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/03 18:28:29 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/06 00:33:34 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void ft_move_player(void *param)
     int new_x, new_y;
 
     data = (data_t *)param;
-    int dx = data->player.move_speed * cos(data->player.rotation_angle);
-    int dy = data->player.move_speed * sin(data->player.rotation_angle);
+    int dx = data->player.move_speed * cos(data->player.rotation_angle * (M_PI / 180.0));
+    int dy = data->player.move_speed * sin(data->player.rotation_angle * (M_PI / 180.0));
     if (mlx_is_key_down(data->mlx, MLX_KEY_W))
     {
         new_x = data->player.x + dx;
@@ -95,9 +95,9 @@ void ft_turn_player(void *param)
     }
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - >
     if (data->player.rotation_angle < 0)
-        data->player.rotation_angle += 2 * M_PI;
-    else if (data->player.rotation_angle > 2 * M_PI)
-        data->player.rotation_angle -= 2 * M_PI;
+        data->player.rotation_angle += 360;
+    else if (data->player.rotation_angle > 360)
+        data->player.rotation_angle -= 360;
 }
 
 void ft_general_hooks(void *param)

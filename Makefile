@@ -6,21 +6,21 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/09/03 16:49:26 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/09/05 22:48:48 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ########## NAMES ##############
 NAME	= cub3D
 INC		= inc 
-IMLX	= -I /Users/$(USER)/goinfre/MLX42/include/MLX42
+IMLX	= -I MLX42/include/MLX42
 
 ########## COMMPILATION ##############
 CC = cc
-MLX = /Users/$(USER)/goinfre/MLX42/build/libmlx42.a
+MLX = MLX42/build/libmlx42.a
 FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
 GLFW = -I include -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
-ARCH = /Users/$(USER)/goinfre/MLX42/build/libmlx42.a
+ARCH = MLX42/build/libmlx42.a
 # -L"/usr/local/Cellar/glfw" 
 # -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
 #CFLAGS = -fsanitize=address -g #-Wall -Wextra -Werror

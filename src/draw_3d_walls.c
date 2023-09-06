@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:49:03 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/04 19:37:12 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/06 00:11:10 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ float cast_ray(data_t *data, float angle)
 void draw_wall_column(data_t *data, vect_t v1, int columnHeight, hitRay_t ray)
 {
     int thick = 1;
-    int color = ft_pixel(50, 50, 50, 255);
+    int color = ft_pixel(40, ray.distance > 32 ? 32 : ray.distance, ray.distance > 32 ? 32 : ray.distance, (columnHeight > 255) ? 255 : columnHeight);
     for (int y = v1.y; y < v1.y + columnHeight; y++)
     {
         for (int x = v1.x; x < v1.x + thick; x++)
