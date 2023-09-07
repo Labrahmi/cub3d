@@ -6,7 +6,7 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/09/05 22:48:48 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/09/06 15:22:28 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ GLFW = -I include -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
 ARCH = MLX42/build/libmlx42.a
 # -L"/usr/local/Cellar/glfw" 
 # -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
-#CFLAGS = -fsanitize=address -g #-Wall -Wextra -Werror
+CFLAGS = -fsanitize=address -g #-Wall -Wextra -Werror
 
 ######### SRCS & OBJS ###############
 SRCDIR	=	src

@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:49:03 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/06 00:11:10 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/07 19:03:10 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void clear_screen(data_t *data)
         for (int x = 0; x < data->game->width; x++)
         {
             if (y > (SCREEN_HEIGHT / 2))
-                mlx_put_pixel(data->game, x, y, ft_pixel(40, 40, 40, 255));
+                mlx_put_pixel(data->game, x, y, ft_pixel(60, 60, 60, 255));
             else
                 mlx_put_pixel(data->game, x, y, ft_pixel(200, 200, 200, 255));
         }
@@ -34,7 +34,7 @@ float cast_ray(data_t *data, float angle)
 void draw_wall_column(data_t *data, vect_t v1, int columnHeight, hitRay_t ray)
 {
     int thick = 1;
-    int color = ft_pixel(40, ray.distance > 32 ? 32 : ray.distance, ray.distance > 32 ? 32 : ray.distance, (columnHeight > 255) ? 255 : columnHeight);
+    int color = ft_pixel((ray.is_horizontal ? 180 : 32), 32, 32, columnHeight > 255 ? 255 : columnHeight);
     for (int y = v1.y; y < v1.y + columnHeight; y++)
     {
         for (int x = v1.x; x < v1.x + thick; x++)

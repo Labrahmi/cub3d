@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/06 01:22:23 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/07 19:32:43 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,29 @@
 #include <math.h>
 #include "MLX42.h"
 
-#define SCREEN_HEIGHT 720
-#define SCREEN_WIDTH 1280
 // --------
-#define GRID_HEIGHT 32
-#define GRID_WIDTH 32
+#define GRID_HEIGHT 50
+#define GRID_WIDTH 50
 #define COLUMNS 18
 #define ROWS 10
 #define MAP_HEIGHT (GRID_HEIGHT * ROWS)
 #define MAP_WIDTH (GRID_WIDTH * COLUMNS)
 // --------
-#define PLAYER_HEIGHT 6
-#define PLAYER_WIDTH 6
+#define SCREEN_HEIGHT 1000
+#define SCREEN_WIDTH 1000
+// --------
+#define PLAYER_HEIGHT 2
+#define PLAYER_WIDTH 2
 // --------
 #define FOV_ANGLE (60.0)
+// --------
+#define DEG_TO_RAD (M_PI / 180.0)
+
 
 typedef struct player_s
 {
-    float x;
-    float y;
+    int x;
+    int y;
     int move_speed;
     float rotation_speed;
     float rotation_angle;
@@ -59,7 +63,7 @@ typedef struct vect_s
 
 typedef struct hitRay_s
 {
-    float distance;
+    double distance;
     int is_horizontal;
 }   hitRay_t;
 
@@ -83,7 +87,5 @@ void ft_hooks(data_t *data);
 
 // 3d
 float cast_ray(data_t *data, float angle);
-void draw_wall_column(data_t *data, vect_t v1, int columnHeight, hitRay_t ray);
 void draw_3d_walls(data_t *data, hitRay_t ray, int ray_num);
 void clear_screen(data_t *data);
-

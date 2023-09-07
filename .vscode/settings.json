@@ -2,6 +2,7 @@
     "files.associations": {
         "*.ejs": "html",
         "__config": "cpp",
-        "cub3d.h": "c"
+        "cub3d.h": "c",
+        "iterator": "c"
     }
 }
