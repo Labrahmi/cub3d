@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/07 19:32:43 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/09 23:15:34 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,17 @@
 #include "MLX42.h"
 
 // --------
-#define GRID_HEIGHT 50
-#define GRID_WIDTH 50
+#define GRID_SIZE 40
 #define COLUMNS 18
 #define ROWS 10
-#define MAP_HEIGHT (GRID_HEIGHT * ROWS)
-#define MAP_WIDTH (GRID_WIDTH * COLUMNS)
+#define MAP_HEIGHT (GRID_SIZE * ROWS)
+#define MAP_WIDTH (GRID_SIZE * COLUMNS)
 // --------
-#define SCREEN_HEIGHT 1000
-#define SCREEN_WIDTH 1000
+#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 1280
 // --------
-#define PLAYER_HEIGHT 2
-#define PLAYER_WIDTH 2
+#define PLAYER_HEIGHT 6
+#define PLAYER_WIDTH 6
 // --------
 #define FOV_ANGLE (60.0)
 // --------
@@ -57,8 +56,8 @@ typedef struct data_s
 
 typedef struct vect_s
 {
-    float x;
-    float y;
+    double x;
+    double y;
 }   vect_t;
 
 typedef struct hitRay_s
