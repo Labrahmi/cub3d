@@ -6,14 +6,14 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/09/06 15:22:28 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/09/09 13:34:11 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ########## NAMES ##############
 NAME	= cub3D
 INC		= inc 
-IMLX	= -I MLX42/include/MLX42
+IMLX	= -I MLX42/include
 
 ########## COMMPILATION ##############
 CC = cc
@@ -21,8 +21,6 @@ MLX = MLX42/build/libmlx42.a
 FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
 GLFW = -I include -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
 ARCH = MLX42/build/libmlx42.a
-# -L"/usr/local/Cellar/glfw" 
-# -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
 CFLAGS = -fsanitize=address -g #-Wall -Wextra -Werror
 
 ######### SRCS & OBJS ###############
