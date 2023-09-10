@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/09 23:15:34 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/10 22:52:57 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@
 #include "MLX42.h"
 
 // --------
-#define GRID_SIZE 40
+#define GRID_SIZE 50
 #define COLUMNS 18
 #define ROWS 10
 #define MAP_HEIGHT (GRID_SIZE * ROWS)
 #define MAP_WIDTH (GRID_SIZE * COLUMNS)
 // --------
-#define SCREEN_HEIGHT 720
-#define SCREEN_WIDTH 1280
+#define SCREEN_HEIGHT MAP_HEIGHT
+#define SCREEN_WIDTH MAP_WIDTH
 // --------
 #define PLAYER_HEIGHT 6
 #define PLAYER_WIDTH 6
 // --------
-#define FOV_ANGLE (60.0)
+// #define data->fov_angle (175.0)
 // --------
 #define DEG_TO_RAD (M_PI / 180.0)
 
@@ -52,6 +52,7 @@ typedef struct data_s
     mlx_image_t *minimap;
     mlx_image_t *game;
     char map_grid[ROWS][COLUMNS];
+    float fov_angle;
 } data_t;
 
 typedef struct vect_s

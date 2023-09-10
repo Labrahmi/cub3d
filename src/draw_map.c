@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/09 23:24:19 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/10 22:19:08 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,35 +208,45 @@ hitRay_t draw_line_with_angle(data_t *data, float angle)
 
 	for (int i = 0; i <= steps; i++)
 	{
-		if ((x >= 0 && x < MAP_WIDTH) && (y >= 0 && y < MAP_HEIGHT))
-			mlx_put_pixel(data->minimap, x, y, ft_pixel(255, 32, 32, 255));
+		// if ((x >= 0 && x < MAP_WIDTH) && (y >= 0 && y < MAP_HEIGHT))
+		// 	mlx_put_pixel(data->minimap, x, y, ft_pixel(255, 32, 32, 255));
 		x += xIncrement;
 		y += yIncrement;
 	}
 	return (ray);
 }
 
+float normalize_angle(float angle)
+{
+	angle = fmod(angle, 360.0f);
+	if (angle < 0)
+		angle += 360.0f;
+	return angle;
+}
+
 void draw_fov(data_t *data)
 {
-	float start_angle = (data->player.rotation_angle - (FOV_ANGLE / 2));
-	float end_angle = (data->player.rotation_angle + (FOV_ANGLE / 2));
-	float step = (FOV_ANGLE / data->game->width);
+	// first_angle
+	float angle = (data->player.rotation_angle - (data->fov_angle / 2));
+	angle = normalize_angle(angle);
+	float step = (data->fov_angle / data->game->width);
 	hitRay_t ray;
 	int ray_num = 0;
 	clear_screen(data);
-	// ray = draw_line_with_angle(data, data->player.rotation_angle);
-	for (float angle = start_angle; angle <= end_angle; angle += step)
+	while (ray_num < data->game->width)
 	{
 		ray = draw_line_with_angle(data, angle);
 		ray.distance = ray.distance * cos((angle - data->player.rotation_angle) * (DEG_TO_RAD));
 		draw_3d_walls(data, ray, ray_num);
 		ray_num++;
+		angle += step;
+		angle = normalize_angle(angle);
 	}
 }
 
 void draw_map(data_t *data)
 {
-	draw_pixels_to_map(data);
-	draw_player(data);
+	// draw_pixels_to_map(data);
+	// draw_player(data);
 	draw_fov(data);
 }

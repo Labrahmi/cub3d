@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:49:03 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/09 18:33:16 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/10 22:15:16 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void draw_3d_walls(data_t *data, hitRay_t ray, int ray_num)
 {
     vect_t v1;
     v1.x = ray_num;
-    v1.y = ((SCREEN_HEIGHT / 2) - (((SCREEN_HEIGHT / 2) * (GRID_SIZE)) / ray.distance));
+    v1.y = ((SCREEN_HEIGHT / 2) - (((SCREEN_HEIGHT / 2) * (GRID_SIZE / 2)) / ray.distance));
     float ch = SCREEN_HEIGHT - (v1.y * 2);
     draw_wall_column(data, v1, ch, ray);
 }

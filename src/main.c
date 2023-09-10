@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 07:30:15 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/09 22:51:49 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/10 22:55:13 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void ft_init(data_t *data)
 	data->player.x = (GRID_SIZE * (18 / 2));
 	data->player.y = (GRID_SIZE * (10 / 2));
 	data->player.rotation_angle = (0);
-	data->player.rotation_speed = 1;
-	data->player.move_speed = 2;
+	data->player.rotation_speed = 2;
+	data->player.move_speed = 4;
+	data->fov_angle = 90;
+	
 	// -
 	char map_grid[ROWS][COLUMNS] = {
 		{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
@@ -43,6 +45,7 @@ void ft_init(data_t *data)
 	draw_map(data);
 	mlx_image_to_window(data->mlx, data->game, 0, 0);
 	mlx_image_to_window(data->mlx, data->minimap, 0, 0);
+	mlx_put_string(data->mlx, "33-34", 10, 10);
 }
 
 int main(void)
