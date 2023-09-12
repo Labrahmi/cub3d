@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/10 22:52:57 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/12 08:01:40 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,17 @@
 #include <unistd.h>
 #include <math.h>
 #include "MLX42.h"
+#include <limits.h>
 
 // --------
-#define GRID_SIZE 50
+#define GRID_SIZE 30
 #define COLUMNS 18
 #define ROWS 10
 #define MAP_HEIGHT (GRID_SIZE * ROWS)
 #define MAP_WIDTH (GRID_SIZE * COLUMNS)
 // --------
-#define SCREEN_HEIGHT MAP_HEIGHT
-#define SCREEN_WIDTH MAP_WIDTH
+#define SCREEN_HEIGHT MAP_HEIGHT * 3
+#define SCREEN_WIDTH MAP_WIDTH * 3
 // --------
 #define PLAYER_HEIGHT 6
 #define PLAYER_WIDTH 6
@@ -38,8 +39,8 @@
 
 typedef struct player_s
 {
-    int x;
-    int y;
+    double x;
+    double y;
     int move_speed;
     float rotation_speed;
     float rotation_angle;
@@ -65,6 +66,8 @@ typedef struct hitRay_s
 {
     double distance;
     int is_horizontal;
+    double x_hit;
+    double y_hit;
 }   hitRay_t;
 
 

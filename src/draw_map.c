@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/10 22:19:08 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/12 07:54:57 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,12 @@ int set_ray_color(ray_num, total_rays)
 		return (ft_pixel(19, 37, 66, 255));
 }
 
-double ft_get_vertical_intersection(data_t *data, double angle)
+hitRay_t ft_get_vertical_intersection(data_t *data, double angle)
 {
 	vect_t intercept;
 	double ystep, xstep;
 	int is_facing_down, is_facing_up, is_facing_right, is_facing_left;
-	int wall_hit_x = 0, wall_hit_y = 0;
+	double wall_hit_x = INT_MAX, wall_hit_y = INT_MAX;
 
 	is_facing_down = (angle > 0 && angle <= 180);
 	is_facing_up = !is_facing_down;
@@ -114,34 +114,42 @@ double ft_get_vertical_intersection(data_t *data, double angle)
 	if (is_facing_down && (ystep < 0))
 		ystep *= -1;
 	//
-	int next_x = intercept.x;
-	int next_y = intercept.y;
-	if (is_facing_left)
-		next_x--;
-	while ((next_x >= 0 && next_x <= MAP_WIDTH) && (next_y >= 0 && next_y <= MAP_HEIGHT))
 	{
-		if (data->map_grid[next_y / GRID_SIZE][next_x / GRID_SIZE] == '1')
+		float x_to_check;
+		float y_to_check;
+		int grid_x, grid_y;
+		while (intercept.x >= 0 && intercept.x < data->minimap->width && intercept.y >= 0 && intercept.y < data->minimap->width)
 		{
-			wall_hit_x = next_x;
-			wall_hit_y = next_y;
-			break;
-		}
-		else
-		{
-			next_x += xstep;
-			next_y += ystep;
+			y_to_check = intercept.y;
+			x_to_check = intercept.x;
+			grid_x = floor(x_to_check / GRID_SIZE) - ((is_facing_left) ? 1 : 0);
+			grid_y = floor(y_to_check / GRID_SIZE);
+			if (data->map_grid[grid_y][grid_x] == '1')
+			{
+				wall_hit_x = intercept.x;
+				wall_hit_y = intercept.y;
+				break;
+			}
+			else
+			{
+				intercept.x += xstep;
+				intercept.y += ystep;
+			}
 		}
 	}
-	double distance = sqrt(pow(wall_hit_x - data->player.x, 2) + pow(wall_hit_y - data->player.y, 2));
-	return (distance);
+	hitRay_t ray;
+	ray.distance = sqrt(pow(wall_hit_x - data->player.x, 2) + pow(wall_hit_y - data->player.y, 2));
+	ray.x_hit = wall_hit_x;
+	ray.y_hit = wall_hit_y;
+	return (ray);
 }
 
-double ft_get_horizontal_intersection(data_t *data, double angle)
+hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 {
 	vect_t intercept;
 	double ystep, xstep;
 	int is_facing_down, is_facing_up, is_facing_right, is_facing_left;
-	int wall_hit_x = 0, wall_hit_y = 0;
+	double wall_hit_x = INT_MAX, wall_hit_y = INT_MAX;
 
 	is_facing_down = (angle > 0 && angle < 180);
 	is_facing_up = !is_facing_down;
@@ -164,54 +172,63 @@ double ft_get_horizontal_intersection(data_t *data, double angle)
 	if (is_facing_right && (xstep < 0))
 		xstep *= -1;
 	//
-	int next_x = intercept.x;
-	int next_y = intercept.y;
-	if (is_facing_up)
-		next_y--;
-	while ((next_x >= 0 && next_x <= MAP_WIDTH) && (next_y >= 0 && next_y <= MAP_HEIGHT))
 	{
-		if (data->map_grid[next_y / GRID_SIZE][next_x / GRID_SIZE] == '1')
+		float x_to_check;
+		float y_to_check;
+		int grid_x, grid_y;
+		while (intercept.x >= 0 && intercept.x < data->minimap->width && intercept.y >= 0 && intercept.y < data->minimap->width)
 		{
-			wall_hit_x = next_x;
-			wall_hit_y = next_y;
-			break;
-		}
-		else
-		{
-			next_x += xstep;
-			next_y += ystep;
+			x_to_check = intercept.x;
+			y_to_check = intercept.y;
+			grid_x = floor(x_to_check / GRID_SIZE);
+			grid_y = floor(y_to_check / GRID_SIZE) - (is_facing_up ? 1 : 0);;
+			if (data->map_grid[grid_y][grid_x] != '0')
+			{
+				wall_hit_x = intercept.x;
+				wall_hit_y = intercept.y;
+				break;
+			}
+			else
+			{
+				intercept.x += xstep;
+				intercept.y += ystep;
+			}
 		}
 	}
-	double distance = sqrt(pow(wall_hit_x - data->player.x, 2) + pow(wall_hit_y - data->player.y, 2));
-	return (distance);
+	hitRay_t ray;
+	ray.distance = sqrt(pow(wall_hit_x - data->player.x, 2) + pow(wall_hit_y - data->player.y, 2));
+	ray.x_hit = wall_hit_x;
+	ray.y_hit = wall_hit_y;
+	return (ray);
 }
 
 hitRay_t draw_line_with_angle(data_t *data, float angle)
 {
 	hitRay_t ray;
-
-	double horizontal_intersection = ft_get_horizontal_intersection(data, angle);
-	double vertical_intersection = ft_get_vertical_intersection(data, angle);
-	double shortest = horizontal_intersection < vertical_intersection ? horizontal_intersection : vertical_intersection;
+	hitRay_t hor = ft_get_horizontal_intersection(data, angle);
+	hitRay_t ver = ft_get_vertical_intersection(data, angle);
 	//
-	ray.distance = shortest;
-	ray.is_horizontal = (horizontal_intersection < vertical_intersection) ? 1 : 0;
-
-	double x = data->player.x, y = data->player.y;
-
-	double end_x = x + ((shortest)*cos(angle * DEG_TO_RAD));
-	double end_y = y + ((shortest)*sin(angle * DEG_TO_RAD));
-
-	double steps = fabs(end_x - x) > fabs(end_y - y) ? fabs(end_x - x) : fabs(end_y - y);
-	double xIncrement = ((end_x - x) / steps);
-	double yIncrement = ((end_y - y) / steps);
-
-	for (int i = 0; i <= steps; i++)
+	ray.distance = (hor.distance < ver.distance) ? hor.distance : ver.distance;
+	ray.is_horizontal = (hor.distance < ver.distance) ? 1 : 0;
+	ray.x_hit = (hor.distance < ver.distance) ? hor.x_hit : ver.x_hit;
+	ray.y_hit = (hor.distance < ver.distance) ? hor.y_hit : ver.y_hit;
+	//
 	{
-		// if ((x >= 0 && x < MAP_WIDTH) && (y >= 0 && y < MAP_HEIGHT))
-		// 	mlx_put_pixel(data->minimap, x, y, ft_pixel(255, 32, 32, 255));
-		x += xIncrement;
-		y += yIncrement;
+		int color = ft_pixel((ray.is_horizontal ? 180 : 32), 32, 32, 255);
+		double x = data->player.x, y = data->player.y;
+		double end_x = x + ((ray.distance) * cos(angle * DEG_TO_RAD));
+		double end_y = y + ((ray.distance) * sin(angle * DEG_TO_RAD));
+		double steps = fabs(end_x - x) > fabs(end_y - y) ? fabs(end_x - x) : fabs(end_y - y);
+		double xIncrement = ((end_x - x) / steps);
+		double yIncrement = ((end_y - y) / steps);
+
+		for (int i = 0; i <= steps; i++)
+		{
+			if ((x >= 0 && x < MAP_WIDTH) && (y >= 0 && y < MAP_HEIGHT))
+				mlx_put_pixel(data->minimap, x, y, color);
+			x += xIncrement;
+			y += yIncrement;
+		}
 	}
 	return (ray);
 }
@@ -246,7 +263,7 @@ void draw_fov(data_t *data)
 
 void draw_map(data_t *data)
 {
-	// draw_pixels_to_map(data);
-	// draw_player(data);
+	draw_pixels_to_map(data);
+	draw_player(data);
 	draw_fov(data);
 }
