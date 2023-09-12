@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 23:33:13 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/11 18:36:42 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/12 08:25:37 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int is_valid_position(data_t *data, int x, int y)
 {
-    int gridX = (x / GRID_SIZE);
-    int gridY = (y / GRID_SIZE);
+    int gridX = (x / data->grid_size);
+    int gridY = (y / data->grid_size);
 
-    if ((gridX >= COLUMNS) || (gridY >= ROWS) || (gridX < 0) || (gridY < 0))
+    if ((gridX >= data->columns) || (gridY >= data->rows) || (gridX < 0) || (gridY < 0))
         return 0;
     if (data->map_grid[gridY][gridX] == '1')
         return 0;

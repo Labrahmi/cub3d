@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:49:03 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/11 16:02:30 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/12 08:34:13 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void clear_screen(data_t *data)
     {
         for (int x = 0; x < data->game->width; x++)
         {
-            if (y > (SCREEN_HEIGHT / 2))
+            if (y > (data->game->height / 2))
                 mlx_put_pixel(data->game, x, y, ft_pixel(60, 60, 60, 255));
             else
                 mlx_put_pixel(data->game, x, y, ft_pixel(200, 200, 200, 255));
@@ -51,7 +51,7 @@ void draw_3d_walls(data_t *data, hitRay_t ray, int ray_num)
 {
     vect_t v1;
     v1.x = ray_num;
-    v1.y = ((SCREEN_HEIGHT / 2) - (((SCREEN_HEIGHT / 2) * (GRID_SIZE)) / ray.distance));
-    float ch = SCREEN_HEIGHT - (v1.y * 2);
+    v1.y = ((data->game->height / 2) - (((data->game->height / 2) * (data->grid_size)) / ray.distance));
+    float ch = data->game->height - (v1.y * 2);
     draw_wall_column(data, v1, ch, ray);
 }

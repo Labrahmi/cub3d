@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/12 07:54:57 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/12 08:36:08 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ void draw_player(data_t *data)
 
 	x_center = data->player.x;
 	y_center = data->player.y;
-	x = data->player.x - PLAYER_WIDTH;
-	y = data->player.y - PLAYER_HEIGHT;
-	radius = (PLAYER_WIDTH < PLAYER_HEIGHT) ? PLAYER_WIDTH : PLAYER_HEIGHT;
+	x = data->player.x - 6;
+	y = data->player.y - 6;
+	radius = (6 < 6) ? 6 : 6;
 	i = 0;
-	while (i < (PLAYER_HEIGHT * 2))
+	while (i < (6 * 2))
 	{
 		j = 0;
-		while (j < (PLAYER_WIDTH * 2))
+		while (j < (6 * 2))
 		{
 			int dist_x = (x + j) - x_center;
 			int dist_y = (y + i) - y_center;
@@ -44,10 +44,10 @@ void draw_one_grid(data_t *data, int x, int y, int sq_color)
 	int i = 0;
 	int color;
 
-	while (i < (GRID_SIZE))
+	while (i < (data->grid_size))
 	{
 		int j = 0;
-		while (j < (GRID_SIZE))
+		while (j < (data->grid_size))
 		{
 			if (i == 0 || j == 0)
 				mlx_put_pixel(data->minimap, (x + j), (y + i), ft_pixel(150, 150, 150, 255));
@@ -65,13 +65,13 @@ void draw_pixels_to_map(data_t *data)
 	int sq_color;
 
 	r = 0;
-	while (r < ROWS)
+	while (r < data->rows)
 	{
 		c = 0;
-		while (c < COLUMNS)
+		while (c < data->columns)
 		{
 			sq_color = set_color(data->map_grid[r][c]);
-			draw_one_grid(data, (c * GRID_SIZE), (r * GRID_SIZE), sq_color);
+			draw_one_grid(data, (c * data->grid_size), (r * data->grid_size), sq_color);
 			c++;
 		}
 		r++;
@@ -98,17 +98,17 @@ hitRay_t ft_get_vertical_intersection(data_t *data, double angle)
 	is_facing_right = (angle < 90 || angle > 270);
 	is_facing_left = !is_facing_right;
 	//
-	intercept.x = floor(data->player.x / GRID_SIZE) * GRID_SIZE;
+	intercept.x = floor(data->player.x / data->grid_size) * data->grid_size;
 	if (is_facing_right)
-		intercept.x += GRID_SIZE;
+		intercept.x += data->grid_size;
 	//
 	intercept.y = data->player.y + (intercept.x - data->player.x) * tan(angle * (DEG_TO_RAD));
 	//
-	xstep = GRID_SIZE;
+	xstep = data->grid_size;
 	if (is_facing_left)
 		xstep *= -1;
 	//
-	ystep = GRID_SIZE * tan(angle * (DEG_TO_RAD));
+	ystep = data->grid_size * tan(angle * (DEG_TO_RAD));
 	if (is_facing_up && (ystep > 0))
 		ystep *= -1;
 	if (is_facing_down && (ystep < 0))
@@ -122,8 +122,8 @@ hitRay_t ft_get_vertical_intersection(data_t *data, double angle)
 		{
 			y_to_check = intercept.y;
 			x_to_check = intercept.x;
-			grid_x = floor(x_to_check / GRID_SIZE) - ((is_facing_left) ? 1 : 0);
-			grid_y = floor(y_to_check / GRID_SIZE);
+			grid_x = floor(x_to_check / data->grid_size) - ((is_facing_left) ? 1 : 0);
+			grid_y = floor(y_to_check / data->grid_size);
 			if (data->map_grid[grid_y][grid_x] == '1')
 			{
 				wall_hit_x = intercept.x;
@@ -156,17 +156,17 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 	is_facing_right = (angle < 90 || angle > 270);
 	is_facing_left = !is_facing_right;
 	//
-	intercept.y = floor(data->player.y / GRID_SIZE) * GRID_SIZE;
+	intercept.y = floor(data->player.y / data->grid_size) * data->grid_size;
 	if (is_facing_down)
-		intercept.y += GRID_SIZE;
+		intercept.y += data->grid_size;
 	//
 	intercept.x = data->player.x + (intercept.y - data->player.y) / tan(angle * (DEG_TO_RAD));
 	//
-	ystep = GRID_SIZE;
+	ystep = data->grid_size;
 	if (is_facing_up)
 		ystep *= -1;
 	//
-	xstep = GRID_SIZE / tan(angle * (DEG_TO_RAD));
+	xstep = data->grid_size / tan(angle * (DEG_TO_RAD));
 	if (is_facing_left && (xstep > 0))
 		xstep *= -1;
 	if (is_facing_right && (xstep < 0))
@@ -180,8 +180,8 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 		{
 			x_to_check = intercept.x;
 			y_to_check = intercept.y;
-			grid_x = floor(x_to_check / GRID_SIZE);
-			grid_y = floor(y_to_check / GRID_SIZE) - (is_facing_up ? 1 : 0);;
+			grid_x = floor(x_to_check / data->grid_size);
+			grid_y = floor(y_to_check / data->grid_size) - (is_facing_up ? 1 : 0);;
 			if (data->map_grid[grid_y][grid_x] != '0')
 			{
 				wall_hit_x = intercept.x;
@@ -224,7 +224,7 @@ hitRay_t draw_line_with_angle(data_t *data, float angle)
 
 		for (int i = 0; i <= steps; i++)
 		{
-			if ((x >= 0 && x < MAP_WIDTH) && (y >= 0 && y < MAP_HEIGHT))
+			if ((x >= 0 && x < data->map_width) && (y >= 0 && y < data->map_height))
 				mlx_put_pixel(data->minimap, x, y, color);
 			x += xIncrement;
 			y += yIncrement;
@@ -264,6 +264,6 @@ void draw_fov(data_t *data)
 void draw_map(data_t *data)
 {
 	draw_pixels_to_map(data);
-	draw_player(data);
 	draw_fov(data);
+	draw_player(data);
 }

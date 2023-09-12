@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/12 08:01:40 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/12 08:39:51 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,7 @@
 #include <limits.h>
 
 // --------
-#define GRID_SIZE 30
-#define COLUMNS 18
-#define ROWS 10
-#define MAP_HEIGHT (GRID_SIZE * ROWS)
-#define MAP_WIDTH (GRID_SIZE * COLUMNS)
-// --------
-#define SCREEN_HEIGHT MAP_HEIGHT * 3
-#define SCREEN_WIDTH MAP_WIDTH * 3
-// --------
-#define PLAYER_HEIGHT 6
-#define PLAYER_WIDTH 6
-// --------
-// #define data->fov_angle (175.0)
-// --------
 #define DEG_TO_RAD (M_PI / 180.0)
-
 
 typedef struct player_s
 {
@@ -52,7 +37,12 @@ typedef struct data_s
     player_t player;
     mlx_image_t *minimap;
     mlx_image_t *game;
-    char map_grid[ROWS][COLUMNS];
+    char map_grid[10][18];
+    int columns;
+    int rows;
+    int grid_size;
+    int map_height;
+    int map_width;
     float fov_angle;
 } data_t;
 
