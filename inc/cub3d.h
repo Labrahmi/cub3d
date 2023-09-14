@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/12 08:39:51 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/13 20:33:25 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct data_s
     int map_height;
     int map_width;
     float fov_angle;
+    mlx_texture_t *texture;
 } data_t;
 
 typedef struct vect_s

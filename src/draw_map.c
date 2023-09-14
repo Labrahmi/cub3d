@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/12 08:36:08 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:41:00 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,6 @@ void draw_pixels_to_map(data_t *data)
 	}
 }
 
-int set_ray_color(ray_num, total_rays)
-{
-	if ((ray_num < 20) || (ray_num > (total_rays - 20)))
-		return (ft_pixel(192, 0, 0, 255));
-	else
-		return (ft_pixel(19, 37, 66, 255));
-}
-
 hitRay_t ft_get_vertical_intersection(data_t *data, double angle)
 {
 	vect_t intercept;
@@ -101,6 +93,8 @@ hitRay_t ft_get_vertical_intersection(data_t *data, double angle)
 	intercept.x = floor(data->player.x / data->grid_size) * data->grid_size;
 	if (is_facing_right)
 		intercept.x += data->grid_size;
+	// if (is_facing_left)
+	// 	intercept.x -= 0.0001;
 	//
 	intercept.y = data->player.y + (intercept.x - data->player.x) * tan(angle * (DEG_TO_RAD));
 	//
@@ -115,8 +109,8 @@ hitRay_t ft_get_vertical_intersection(data_t *data, double angle)
 		ystep *= -1;
 	//
 	{
-		float x_to_check;
-		float y_to_check;
+		double x_to_check;
+		double y_to_check;
 		int grid_x, grid_y;
 		while (intercept.x >= 0 && intercept.x < data->minimap->width && intercept.y >= 0 && intercept.y < data->minimap->width)
 		{
@@ -159,6 +153,8 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 	intercept.y = floor(data->player.y / data->grid_size) * data->grid_size;
 	if (is_facing_down)
 		intercept.y += data->grid_size;
+	// if (is_facing_up)
+	// 	intercept.y -= 0.0001;
 	//
 	intercept.x = data->player.x + (intercept.y - data->player.y) / tan(angle * (DEG_TO_RAD));
 	//
@@ -173,8 +169,8 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 		xstep *= -1;
 	//
 	{
-		float x_to_check;
-		float y_to_check;
+		double x_to_check;
+		double y_to_check;
 		int grid_x, grid_y;
 		while (intercept.x >= 0 && intercept.x < data->minimap->width && intercept.y >= 0 && intercept.y < data->minimap->width)
 		{

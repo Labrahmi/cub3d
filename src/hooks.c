@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 23:33:13 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/12 08:25:37 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/14 18:32:37 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,19 +111,11 @@ void ft_general_hooks(void *param)
     {
         if ((data->fov_angle + 1) < 160)
             data->fov_angle += 1;
-        // if ((data->player.move_speed + 1) < 10)
-        //     data->player.move_speed += 1;
-        // if (data->player.rotation_speed + 1 < 10)
-        //     data->player.rotation_speed += 1;
     }
     if (mlx_is_key_down(data->mlx, MLX_KEY_KP_SUBTRACT))
     {
         if ((data->fov_angle - 1) > 30)
             data->fov_angle -= 1;
-        // if ((data->player.move_speed - 1) < 1)
-        //     data->player.move_speed -= 1;
-        // if (data->player.rotation_speed - 1 < 1)
-        //     data->player.rotation_speed -= 1;
     }
 }
 
