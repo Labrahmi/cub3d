@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/14 18:41:00 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/16 07:22:40 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void draw_player(data_t *data)
 			int dist_y = (y + i) - y_center;
 			if (dist_x * dist_x + dist_y * dist_y <= radius * radius)
 			{
-				mlx_put_pixel(data->minimap, (x + j), (y + i), ft_pixel(30, 30, 192, 255));
+				mlx_put_pixel(data->minimap, (x + j) / 5.00, (y + i) / 5.00, ft_pixel(30, 30, 192, 255));
 			}
 			j++;
 		}
@@ -50,9 +50,9 @@ void draw_one_grid(data_t *data, int x, int y, int sq_color)
 		while (j < (data->grid_size))
 		{
 			if (i == 0 || j == 0)
-				mlx_put_pixel(data->minimap, (x + j), (y + i), ft_pixel(150, 150, 150, 255));
+				mlx_put_pixel(data->minimap, (x + j) / 5.00, (y + i) / 5.00, ft_pixel(150, 150, 150, 255));
 			else
-				mlx_put_pixel(data->minimap, (x + j), (y + i), sq_color);
+				mlx_put_pixel(data->minimap, (x + j) / 5.00, (y + i) / 5.00, sq_color);
 			j++;
 		}
 		i++;
@@ -132,6 +132,10 @@ hitRay_t ft_get_vertical_intersection(data_t *data, double angle)
 		}
 	}
 	hitRay_t ray;
+	ray.is_facing_down = is_facing_down;
+	ray.is_facing_up = is_facing_up;
+	ray.is_facing_left = is_facing_left;
+	ray.is_facing_right = is_facing_right;
 	ray.distance = sqrt(pow(wall_hit_x - data->player.x, 2) + pow(wall_hit_y - data->player.y, 2));
 	ray.x_hit = wall_hit_x;
 	ray.y_hit = wall_hit_y;
@@ -150,6 +154,8 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 	is_facing_right = (angle < 90 || angle > 270);
 	is_facing_left = !is_facing_right;
 	//
+
+	// 
 	intercept.y = floor(data->player.y / data->grid_size) * data->grid_size;
 	if (is_facing_down)
 		intercept.y += data->grid_size;
@@ -177,7 +183,8 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 			x_to_check = intercept.x;
 			y_to_check = intercept.y;
 			grid_x = floor(x_to_check / data->grid_size);
-			grid_y = floor(y_to_check / data->grid_size) - (is_facing_up ? 1 : 0);;
+			grid_y = floor(y_to_check / data->grid_size) - (is_facing_up ? 1 : 0);
+			;
 			if (data->map_grid[grid_y][grid_x] != '0')
 			{
 				wall_hit_x = intercept.x;
@@ -192,6 +199,10 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 		}
 	}
 	hitRay_t ray;
+	ray.is_facing_down = is_facing_down;
+	ray.is_facing_up = is_facing_up;
+	ray.is_facing_left = is_facing_left;
+	ray.is_facing_right = is_facing_right;	
 	ray.distance = sqrt(pow(wall_hit_x - data->player.x, 2) + pow(wall_hit_y - data->player.y, 2));
 	ray.x_hit = wall_hit_x;
 	ray.y_hit = wall_hit_y;
@@ -208,6 +219,10 @@ hitRay_t draw_line_with_angle(data_t *data, float angle)
 	ray.is_horizontal = (hor.distance < ver.distance) ? 1 : 0;
 	ray.x_hit = (hor.distance < ver.distance) ? hor.x_hit : ver.x_hit;
 	ray.y_hit = (hor.distance < ver.distance) ? hor.y_hit : ver.y_hit;
+	ray.is_facing_down = (hor.distance < ver.distance) ? hor.is_facing_down : ver.is_facing_down;
+	ray.is_facing_up = (hor.distance < ver.distance) ? hor.is_facing_up : ver.is_facing_up;
+	ray.is_facing_left = (hor.distance < ver.distance) ? hor.is_facing_left : ver.is_facing_left;
+	ray.is_facing_right = (hor.distance < ver.distance) ? hor.is_facing_right : ver.is_facing_right;
 	//
 	{
 		int color = ft_pixel((ray.is_horizontal ? 180 : 32), 32, 32, 255);
@@ -221,7 +236,7 @@ hitRay_t draw_line_with_angle(data_t *data, float angle)
 		for (int i = 0; i <= steps; i++)
 		{
 			if ((x >= 0 && x < data->map_width) && (y >= 0 && y < data->map_height))
-				mlx_put_pixel(data->minimap, x, y, color);
+				mlx_put_pixel(data->minimap, x / 5.00, y / 5.00, color);
 			x += xIncrement;
 			y += yIncrement;
 		}

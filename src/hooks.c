@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 23:33:13 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/14 18:32:37 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/16 07:30:07 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,18 +86,22 @@ void ft_turn_player(void *param)
     if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
     {
         data->player.rotation_angle -= data->player.rotation_speed;
+        if (data->player.rotation_angle < 0)
+            data->player.rotation_angle += 360;
+        else if (data->player.rotation_angle > 360)
+            data->player.rotation_angle -= 360;
         draw_map(data);
     }
     if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
     {
         data->player.rotation_angle += data->player.rotation_speed;
+        if (data->player.rotation_angle < 0)
+            data->player.rotation_angle += 360;
+        else if (data->player.rotation_angle > 360)
+            data->player.rotation_angle -= 360;
         draw_map(data);
     }
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - >
-    if (data->player.rotation_angle < 0)
-        data->player.rotation_angle += 360;
-    else if (data->player.rotation_angle > 360)
-        data->player.rotation_angle -= 360;
 }
 
 void ft_general_hooks(void *param)
@@ -117,6 +121,7 @@ void ft_general_hooks(void *param)
         if ((data->fov_angle - 1) > 30)
             data->fov_angle -= 1;
     }
+    
 }
 
 void ft_hooks(data_t *data)

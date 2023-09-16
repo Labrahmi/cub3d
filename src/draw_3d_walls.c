@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:49:03 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/14 19:44:54 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/16 06:59:41 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,36 +31,63 @@ float cast_ray(data_t *data, float angle)
     return 0;
 }
 
-void draw_one_culumn_textur(data_t *data, vect_t c_img, vect_t c_tex)
+void draw_one_culumn_textur(data_t *data, vect_t c_img, vect_t c_tex, float columnHeight, mlx_texture_t *texture)
 {
     int x = c_tex.x;
-    int y = c_tex.y;
     int x2 = c_img.x;
     int y2 = c_img.y;
 
     uint8_t *pixelx;
     uint8_t *pixeli;
-    for (uint32_t y = 0; y < data->texture->height - (c_img.y * 2); y += 1, y2++)
+    uint32_t y = 0;
+    if (columnHeight > data->game->height)
     {
-        pixelx = &data->texture->pixels[((y * data->texture->width) + x) * data->texture->bytes_per_pixel];
-        pixeli = &data->game->pixels[((y2 * data->game->width) + x2) * data->texture->bytes_per_pixel];
-        memmove(pixeli, pixelx, data->texture->bytes_per_pixel);
+        y = (columnHeight - data->game->height) / 2;
+    }
+    if (y2 < 0)
+        y2 = 0;
+    while (y2 < data->game->height /*y < data->texture->height - (c_img.y * 2)*/)
+    {
+        c_tex.y = y * ((float) texture->height / (float) columnHeight);
+        if (c_tex.y < texture->height
+            && (((int) c_tex.y * texture->width) + x) < texture->width * texture->height)
+        {
+            pixelx = &texture->pixels[(((int) c_tex.y * texture->width) + x) * texture->bytes_per_pixel];
+            pixeli = &data->game->pixels[((y2 * data->game->width) + x2) * texture->bytes_per_pixel];
+            memmove(pixeli, pixelx, texture->bytes_per_pixel);
+        }
+        y2++;
+        y++;
     }
 }
 
-void draw_wall_column(data_t *data, vect_t v1, int columnHeight, hitRay_t ray)
+void draw_wall_column(data_t *data, vect_t v1, float columnHeight, hitRay_t ray)
 {
     vect_t c_img, c_tex;
+    mlx_texture_t *texture;
     int thick = 1;
     int color = ft_pixel((ray.is_horizontal ? 180 : 32), 32, 32, columnHeight > 255 ? 255 : columnHeight);
 
     c_img.x = v1.x;
     c_img.y = v1.y;
-    c_tex.x = ((int) ray.x_hit % data->grid_size);
-    c_tex.y = ((int) ray.y_hit % data->grid_size);
-
-    draw_one_culumn_textur(data, c_img, c_tex);
-    
+    float width_ratio;
+    if (ray.is_horizontal)
+    {
+        texture = data->texture_1;
+        if (ray.is_facing_up)
+            texture = data->texture_2;
+        width_ratio = (float) ((float)texture->width / (float) data->grid_size);
+        c_tex.x = fmod(ray.x_hit , data->grid_size) * (width_ratio);
+    }
+    else
+    {
+        texture = data->texture_3;
+        if (ray.is_facing_left)
+            texture = data->texture_4;
+        width_ratio = (float) ((float)texture->width / (float) data->grid_size);
+        c_tex.x = fmod(ray.y_hit , data->grid_size) * (width_ratio);
+    }
+    draw_one_culumn_textur(data, c_img, c_tex, columnHeight, texture);
     
     // for (int y = v1.y; y < v1.y + columnHeight; y++)
     // {
