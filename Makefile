@@ -6,7 +6,7 @@
 #    By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/09/14 22:25:15 by ayakoubi         ###   ########.fr        #
+#    Updated: 2023/09/17 10:10:07 by ayakoubi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ PRSDIR		=	parser
 OBJDIR		=	obj
 
 SRCS		  := main drawing_tools draw_map hooks draw_3d_walls
-PARSERSRC 		:=		parser init_data check_errors utils
+PARSERSRC 		:=		parser init_data check_errors utils lst_utils
 
 SRC				:=      $(addprefix $(SRCDIR)/, $(addsuffix .c, $(SRCS)))
 OBJ             :=      $(addprefix $(OBJDIR)/, $(addsuffix .o, $(SRCS)))

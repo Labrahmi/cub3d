@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/16 16:59:49 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/17 10:20:47 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,36 @@
 #define FALSE 0
 #define TRUE 1
 
+typedef enum e_dir
+{
+    NORTH = 270,
+    SOUTH = 90,
+    WEST = 180,
+    EAST = 0
+} t_dir;
+
+typedef struct s_corMap
+{
+    int x;
+    int y;
+    t_dir dir;
+} t_corMap;
+
 typedef struct s_data_maps
 {
     char *textures[4];
     int F[3];
     int C[3];
     char **map;
+    t_corMap *posplayer;
 } t_data_maps;
 
-typedef struct s_corMap
+typedef struct s_listMap
 {
-    int x;
-    int y;
-} t_corMap;
+	int x;
+	int y;
+	struct s_listMap *next;
+}	t_listMap;
 
 typedef struct player_s
 {

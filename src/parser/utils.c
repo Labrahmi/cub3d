@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 12:37:51 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/09/14 20:47:29 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/09/17 10:37:10 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,18 @@ void	free_2d_array(char **str)
 	while (str[++i])
 		free(str[i]);
 	free(str);
+}
+
+void set_dir_init(t_corMap *pos, char c)
+{
+	if (c == 'N')
+		pos->dir = NORTH;
+	if (c == 'S')
+		pos->dir = SOUTH;
+	if (c == 'E')
+		pos->dir = EAST;
+	if (c == 'W')
+		pos->dir = WEST;
 }
 
 t_corMap	*init_corMap(char **map)
@@ -41,7 +53,11 @@ t_corMap	*init_corMap(char **map)
 			while (++i < 4)
 			{
 				if (map[pos->y][pos->x] == c[i])
+				{
+					map[pos->y][pos->x] = '0';
+					set_dir_init(pos, c[i]);
 					return (pos);
+				}
 			}
 		}
 	}

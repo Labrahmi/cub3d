@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 07:30:15 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/17 08:55:21 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/17 10:31:08 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ void ft_init(data_t *data, t_data_maps *map)
 {
 	int i = -1;
 	while (map->map[++i])
-	{
-		if (map->map[i][strlen(map->map[i]) - 1] == 10)
-			map->map[i][strlen(map->map[i]) - 1] = '\0';
-	}
+		map->map[i] = ft_strtrim(map->map[i], "\n");
+	vect_t pos;
 	data->mlx = mlx_init(1000, 512, "cub3d", false);
 	if (!(data->mlx))
 		exit(EXIT_FAILURE);
@@ -47,9 +45,9 @@ void ft_init(data_t *data, t_data_maps *map)
 	data->grid_size = 30;
 	data->map_height = data->grid_size * data->rows;
 	data->map_width = data->grid_size * data->columns;
-	data->player.x = 60; // (data->map_width / 2);
-	data->player.y = 60; // (data->map_height / 2);
-	data->player.rotation_angle = (0);
+	data->player.x = (map->posplayer->x * data->grid_size) + (data->grid_size / 2); // (data->map_width / 2);
+	data->player.y = (map->posplayer->y * data->grid_size) + (data->grid_size / 2); // (data->map_height / 2);
+	data->player.rotation_angle = (map->posplayer->dir);
 	data->player.rotation_speed = 2;
 	data->player.move_speed = 3;
 	data->fov_angle = 90;
