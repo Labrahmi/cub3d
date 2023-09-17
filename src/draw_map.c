@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/17 08:21:06 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/17 11:28:14 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ hitRay_t ft_get_vertical_intersection(data_t *data, double angle)
 	intercept.x = floor(data->player.x / data->grid_size) * data->grid_size;
 	if (is_facing_right)
 		intercept.x += data->grid_size;
-	// if (is_facing_left)
-	// 	intercept.x -= 0.0001;
+	if (is_facing_left)
+		intercept.x -= 0.0001;
 	//
 	intercept.y = data->player.y + (intercept.x - data->player.x) * tan(angle * (DEG_TO_RAD));
 	//
@@ -116,7 +116,7 @@ hitRay_t ft_get_vertical_intersection(data_t *data, double angle)
 		{
 			y_to_check = intercept.y;
 			x_to_check = intercept.x;
-			grid_x = floor(x_to_check / data->grid_size) - ((is_facing_left) ? 1 : 0);
+			grid_x = floor(x_to_check / data->grid_size) /*- ((is_facing_left) ? 1 : 0)*/;
 			grid_y = floor(y_to_check / data->grid_size);
 			if (grid_x < 0 || grid_x >= data->columns || grid_y < 0 || grid_y >= data->rows)
 				break;
@@ -161,8 +161,8 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 	intercept.y = floor(data->player.y / data->grid_size) * data->grid_size;
 	if (is_facing_down)
 		intercept.y += data->grid_size;
-	// if (is_facing_up)
-	// 	intercept.y -= 0.0001;
+	if (is_facing_up)
+		intercept.y -= 0.0001;
 	//
 	intercept.x = data->player.x + (intercept.y - data->player.y) / tan(angle * (DEG_TO_RAD));
 	//
@@ -185,7 +185,7 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 			x_to_check = intercept.x;
 			y_to_check = intercept.y;
 			grid_x = floor(x_to_check / data->grid_size);
-			grid_y = floor(y_to_check / data->grid_size) - (is_facing_up ? 1 : 0);
+			grid_y = floor(y_to_check / data->grid_size) /*- (is_facing_up ? 1 : 0)*/;
 			if (grid_x < 0 || grid_x >= data->columns || grid_y < 0 || grid_y >= data->rows)
 				break;
 			if (data->map_grid[grid_y][grid_x] != '0')

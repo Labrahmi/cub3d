@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 07:30:15 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/17 10:53:39 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/17 11:30:45 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void ft_init(data_t *data, t_data_maps *map)
 	while (map->map[++i])
 		map->map[i] = ft_strtrim(map->map[i], "\n");
 	vect_t pos;
-	data->mlx = mlx_init(1000, 512, "cub3d", false);
+	data->mlx = mlx_init(1000, 700, "cub3d", false);
 	if (!(data->mlx))
 		exit(EXIT_FAILURE);
 	data->columns = calculate_res(map, 1);
@@ -53,7 +53,7 @@ void ft_init(data_t *data, t_data_maps *map)
 	data->fov_angle = 90;
 	// -
 	data->minimap = mlx_new_image(data->mlx, data->map_width, data->map_height);
-	data->game = mlx_new_image(data->mlx, 1000, 512);
+	data->game = mlx_new_image(data->mlx, 1000, 700);
 	// -
 	data->map_grid = (char **) calloc(sizeof(char *), data->rows + 1);
 	i = -1;
