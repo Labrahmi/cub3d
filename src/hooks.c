@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 23:33:13 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/17 08:33:11 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/17 11:14:04 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,17 +111,6 @@ void ft_general_hooks(void *param)
     data = (data_t *)param;
     if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
         mlx_close_window(data->mlx);
-    if (mlx_is_key_down(data->mlx, MLX_KEY_KP_ADD))
-    {
-        if ((data->fov_angle + 1) < 160)
-            data->fov_angle += 1;
-    }
-    if (mlx_is_key_down(data->mlx, MLX_KEY_KP_SUBTRACT))
-    {
-        if ((data->fov_angle - 1) > 30)
-            data->fov_angle -= 1;
-    }
-    
 }
 
 void mouse_hook(double xpos, double ypos, void *param)
@@ -157,5 +146,5 @@ void ft_hooks(data_t *data)
     mlx_loop_hook(data->mlx, ft_turn_player, data);
     mlx_loop_hook(data->mlx, ft_general_hooks, data);
     // mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
-	// mlx_cursor_hook(data->mlx,(mlx_cursorfunc) mouse_hook, data);
+    // mlx_cursor_hook(data->mlx,(mlx_cursorfunc) mouse_hook, data);
 }

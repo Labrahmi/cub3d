@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 07:30:15 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/17 10:31:08 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/09/17 10:53:39 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ void ft_init(data_t *data, t_data_maps *map)
 	while (map->map[++i])
 		data->map_grid[i] = map->map[i];
 	// -
-	data->texture_1 = mlx_load_png("assets/des_1.png");
-	data->texture_2 = mlx_load_png("assets/des_2.png");
-	data->texture_3 = mlx_load_png("assets/des_3.png");
-	data->texture_4 = mlx_load_png("assets/des_4.png");
+	data->texture_1 = mlx_load_png("assets/new_1.png");
+	data->texture_2 = mlx_load_png("assets/new_2.png");
+	data->texture_3 = mlx_load_png("assets/new_3.png");
+	data->texture_4 = mlx_load_png("assets/new_4.png");
 	draw_map(data);
 	mlx_image_to_window(data->mlx, data->game, 0, 0);
 	mlx_image_to_window(data->mlx, data->minimap, 0, 0);
