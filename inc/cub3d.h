@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/16 10:07:46 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/16 16:59:49 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct data_s
     player_t player;
     mlx_image_t *minimap;
     mlx_image_t *game;
-    char map_grid[10][18];
+    char **map_grid;
     int columns;
     int rows;
     int grid_size;

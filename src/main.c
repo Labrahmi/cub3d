@@ -6,94 +6,89 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 07:30:15 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/16 10:07:16 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/17 08:55:21 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void ft_init(data_t *data)
+int calculate_res(t_data_maps *map, int mode)
 {
-	data->mlx = mlx_init(1280, 720, "cub3d", false);
+	int i = 0;
+	int max;
+	while (map->map[i])
+	{
+		if (i == 0)
+			max = strlen(map->map[i]);
+		if (strlen(map->map[i]) > max)
+			max = strlen(map->map[i]);
+		i++;
+	}
+	if (mode == 1)
+		return (max);
+	if (mode == 2)
+		return (i);
+	return 0;
+}
+
+void ft_init(data_t *data, t_data_maps *map)
+{
+	int i = -1;
+	while (map->map[++i])
+	{
+		if (map->map[i][strlen(map->map[i]) - 1] == 10)
+			map->map[i][strlen(map->map[i]) - 1] = '\0';
+	}
+	data->mlx = mlx_init(1000, 512, "cub3d", false);
 	if (!(data->mlx))
 		exit(EXIT_FAILURE);
-	data->grid_size = 50;
-	data->map_height = data->grid_size * 10;
-	data->map_width = data->grid_size * 18;
-	data->player.x = (750);
-	data->player.y = (400);
-	data->player.rotation_angle = (210);
+	data->columns = calculate_res(map, 1);
+	data->rows = calculate_res(map, 2);
+	data->grid_size = 30;
+	data->map_height = data->grid_size * data->rows;
+	data->map_width = data->grid_size * data->columns;
+	data->player.x = 60; // (data->map_width / 2);
+	data->player.y = 60; // (data->map_height / 2);
+	data->player.rotation_angle = (0);
 	data->player.rotation_speed = 2;
 	data->player.move_speed = 3;
-	data->fov_angle = 60;
-	data->columns = 18;
-	data->rows = 10;
+	data->fov_angle = 90;
 	// -
 	data->minimap = mlx_new_image(data->mlx, data->map_width, data->map_height);
-	data->game = mlx_new_image(data->mlx, 1280, 720);
+	data->game = mlx_new_image(data->mlx, 1000, 512);
 	// -
-	char map_grid[10][18] = {
-		{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'},
-		{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
-	};
-	memcpy(data->map_grid, map_grid, sizeof(map_grid));
+	data->map_grid = (char **) calloc(sizeof(char *), data->rows + 1);
+	i = -1;
+	while (map->map[++i])
+		data->map_grid[i] = map->map[i];
 	// -
-	data->texture_1 = mlx_load_png("assets/wall_1.png");
-	data->texture_2 = mlx_load_png("assets/wall_2.png");
-	data->texture_3 = mlx_load_png("assets/wall_3.png");
-	data->texture_4 = mlx_load_png("assets/wall_4.png");
+	data->texture_1 = mlx_load_png("assets/des_1.png");
+	data->texture_2 = mlx_load_png("assets/des_2.png");
+	data->texture_3 = mlx_load_png("assets/des_3.png");
+	data->texture_4 = mlx_load_png("assets/des_4.png");
 	draw_map(data);
 	mlx_image_to_window(data->mlx, data->game, 0, 0);
 	mlx_image_to_window(data->mlx, data->minimap, 0, 0);
-	mlx_put_string(data->mlx, "33-34", 10, 10);
 	//
 }
 
-void mouse_hook(double xpos, double ypos, void *param)
-{
-	static int old_xpos;
-	static int i;
-	data_t *data;
-
-    data = (data_t *) param;
-	if (old_xpos == 0)
-		old_xpos = xpos;
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - >
-	if (i++ == 1)
-	{
-		if (old_xpos > xpos)
-			data->player.rotation_angle -= (data->player.rotation_speed * 1.5);
-		if (old_xpos < xpos)
-			data->player.rotation_angle += (data->player.rotation_speed * 1.5);
-		i = 0;
-		old_xpos = xpos;
-		draw_map(data);
-	}
-	// 
-    if (data->player.rotation_angle < 0)
-        data->player.rotation_angle += 360;
-    else if (data->player.rotation_angle > 360)
-        data->player.rotation_angle -= 360;
-}
-
-
-int main(void)
+int main(int ac, char **av)
 {
 	data_t *data;
+	t_data_maps data_map;
+	t_list list;
 
+	if (ac != 2)
+		return (1);
+	init_data(&data_map);
+	int fd = open(av[1], O_RDONLY);
+	if (read_map(fd, av[1], &data_map) == FALSE)
+		return (printf("ERROR\n"), 1);
+	if (check_errors(&data_map, &list) == FALSE)
+		return (printf("ERROR\n"), 1);
 	data = malloc(sizeof(data_t));
-	ft_init(data);
+	ft_init(data, &data_map);
 	ft_hooks(data);
-	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
-	mlx_cursor_hook(data->mlx,(mlx_cursorfunc) mouse_hook, data);
 	mlx_loop(data->mlx);
 	mlx_terminate(data->mlx);
 	system("clear");
