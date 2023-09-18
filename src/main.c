@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 07:30:15 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/17 11:30:45 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/18 01:56:07 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void ft_init(data_t *data, t_data_maps *map)
 	data->player.y = (map->posplayer->y * data->grid_size) + (data->grid_size / 2); // (data->map_height / 2);
 	data->player.rotation_angle = (map->posplayer->dir);
 	data->player.rotation_speed = 2;
-	data->player.move_speed = 3;
-	data->fov_angle = 90;
+	data->player.move_speed = 4;
+	data->fov_angle = 60;
 	// -
 	data->minimap = mlx_new_image(data->mlx, data->map_width, data->map_height);
 	data->game = mlx_new_image(data->mlx, 1000, 700);
@@ -60,10 +60,10 @@ void ft_init(data_t *data, t_data_maps *map)
 	while (map->map[++i])
 		data->map_grid[i] = map->map[i];
 	// -
-	data->texture_1 = mlx_load_png("assets/new_1.png");
-	data->texture_2 = mlx_load_png("assets/new_2.png");
-	data->texture_3 = mlx_load_png("assets/new_3.png");
-	data->texture_4 = mlx_load_png("assets/new_4.png");
+	data->texture_1 = mlx_load_png("assets/wall_1.png");
+	data->texture_2 = mlx_load_png("assets/wall_2.png");
+	data->texture_3 = mlx_load_png("assets/wall_3.png");
+	data->texture_4 = mlx_load_png("assets/wall_4.png");
 	draw_map(data);
 	mlx_image_to_window(data->mlx, data->game, 0, 0);
 	mlx_image_to_window(data->mlx, data->minimap, 0, 0);

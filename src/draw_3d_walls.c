@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:49:03 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/16 06:59:41 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/18 00:13:26 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void clear_screen(data_t *data)
         for (int x = 0; x < data->game->width; x++)
         {
             if (y > (data->game->height / 2))
-                mlx_put_pixel(data->game, x, y, ft_pixel(60, 60, 60, 255));
+                mlx_put_pixel(data->game, x, y, ft_pixel(72, 72, 72, 255));
             else
-                mlx_put_pixel(data->game, x, y, ft_pixel(200, 200, 200, 255));
+                mlx_put_pixel(data->game, x, y, ft_pixel(255, 255, 255, 255));
         }
     }
 }

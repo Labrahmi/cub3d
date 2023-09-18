@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:34:40 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/17 08:23:40 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/17 23:59:27 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int set_color(char position)
 
     sq_color = ft_pixel(32, 32, 32, 0); // Default
     if (position == '0')
-        sq_color = ft_pixel(255, 245, 224, 255); // white
+        sq_color = ft_pixel(255, 245, 224, 150); // white
     if (position == '1')
-        sq_color = ft_pixel(144, 159, 145, 255); // blue
+        sq_color = ft_pixel(144, 159, 145, 150); // blue
     if (position == 'P')
-        sq_color = ft_pixel(130, 93, 14, 255); // yellow
+        sq_color = ft_pixel(130, 93, 14, 150); // yellow
     return (sq_color);
 }

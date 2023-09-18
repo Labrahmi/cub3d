@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/17 11:28:14 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/09/17 23:58:57 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void draw_player(data_t *data)
 			int dist_y = (y + i) - y_center;
 			if (dist_x * dist_x + dist_y * dist_y <= radius * radius)
 			{
-				mlx_put_pixel(data->minimap, (x + j) / 4.00, (y + i) / 4.00, ft_pixel(30, 30, 192, 255));
+				mlx_put_pixel(data->minimap, (x + j) / 4.00, (y + i) / 4.00, ft_pixel(30, 30, 192, 150));
 			}
 			j++;
 		}
@@ -50,7 +50,7 @@ void draw_one_grid(data_t *data, int x, int y, int sq_color)
 		while (j < (data->grid_size))
 		{
 			if (i == 0 || j == 0)
-				mlx_put_pixel(data->minimap, (x + j) / 4.00, (y + i) / 4.00, ft_pixel(150, 150, 150, 255));
+				mlx_put_pixel(data->minimap, (x + j) / 4.00, (y + i) / 4.00, ft_pixel(150, 150, 150, 150));
 			else
 				mlx_put_pixel(data->minimap, (x + j) / 4.00, (y + i) / 4.00, sq_color);
 			j++;
@@ -227,7 +227,7 @@ hitRay_t draw_line_with_angle(data_t *data, float angle)
 	ray.is_facing_left = (hor.distance < ver.distance) ? hor.is_facing_left : ver.is_facing_left;
 	ray.is_facing_right = (hor.distance < ver.distance) ? hor.is_facing_right : ver.is_facing_right;
 	
-	int color = ft_pixel(180, 32, 32, 255);
+	int color = ft_pixel(180, 32, 32, 150);
 	double x = data->player.x, y = data->player.y;
 	double end_x = x + ((ray.distance) * cos(angle * DEG_TO_RAD));
 	double end_y = y + ((ray.distance) * sin(angle * DEG_TO_RAD));
