@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 20:45:06 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/03/06 13:20:56 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/09/25 10:42:39 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *str)
 {
 	size_t	i;
 
+	if (!str)
+		return (0);
 	i = -1;
 	while (str[++i])
 		;

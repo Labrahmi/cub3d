@@ -6,7 +6,7 @@
 #    By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/09/14 22:25:15 by ayakoubi         ###   ########.fr        #
+#    Updated: 2023/10/01 12:05:48 by ayakoubi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,15 +21,15 @@ MLX = MLX42/build/libmlx42.a
 FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
 GLFW = -I include -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
 ARCH = MLX42/build/libmlx42.a
-CFLAGS = -fsanitize=address -g #-Wall -Wextra -Werror
+CFLAGS =  -Wall -Wextra -Werror #-fsanitize=address -g
 
 ######### SRCS & OBJS ###############
 SRCDIR	 	=	src
 PRSDIR		=	parser
 OBJDIR		=	obj
 
-SRCS		  := main drawing_tools draw_map hooks draw_3d_walls
-PARSERSRC 		:=		parser init_data check_errors utils
+SRCS		:=	main init drawing_tools draw_map draw_pixels draw_fov hooks draw_3d_walls move_player
+PARSERSRC	:=	parser init_destroy_data_map check_errors utils utils_2
 
 SRC				:=      $(addprefix $(SRCDIR)/, $(addsuffix .c, $(SRCS)))
 OBJ             :=      $(addprefix $(OBJDIR)/, $(addsuffix .o, $(SRCS)))
@@ -67,7 +67,7 @@ $(OBJDIR)/%.o:	$(SRCDIR)/%.c
 	@printf "$(GREEN) compile >>>>> $(notdir $<) $(RESET)\n"
 	@mkdir -p $(OBJDIR)
 	@mkdir -p $(OBJDIR)/$(PRSDIR)
-	@$(CC) $(CFALGS) $< -c -I $(INC) $(IMLX) -o $@
+	@$(CC) $(CFLAGS) $< -c -I $(INC) $(IMLX) -o $@
 
 
 $(NAME):	$(OBJ) $(PARSEROBJ)

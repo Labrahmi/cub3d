@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/17 08:21:06 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/10/01 15:48:03 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,67 +14,25 @@
 
 void draw_player(data_t *data)
 {
-	int x_center, y_center, x, y, i, j, radius;
+	int x;
+	int y;
+	int i;
+	int j;
+	int size;
 
-	x_center = data->player.x;
-	y_center = data->player.y;
-	x = data->player.x - 6;
-	y = data->player.y - 6;
-	radius = (6 < 6) ? 6 : 6;
+	size = 4;
+	x = data->player.x - size / 2;
+	y = data->player.y - size / 2;
 	i = 0;
-	while (i < (6 * 2))
+	while (i < size)
 	{
 		j = 0;
-		while (j < (6 * 2))
+		while (j < size)
 		{
-			int dist_x = (x + j) - x_center;
-			int dist_y = (y + i) - y_center;
-			if (dist_x * dist_x + dist_y * dist_y <= radius * radius)
-			{
-				mlx_put_pixel(data->minimap, (x + j) / 4.00, (y + i) / 4.00, ft_pixel(30, 30, 192, 255));
-			}
+			mlx_put_pixel(data->minimap, (x + j) / 1.00, (y + i) / 1.00, ft_pixel(30, 30, 192, 150));
 			j++;
 		}
 		i++;
-	}
-}
-
-void draw_one_grid(data_t *data, int x, int y, int sq_color)
-{
-	int i = 0;
-	int color;
-
-	while (i < (data->grid_size))
-	{
-		int j = 0;
-		while (j < (data->grid_size))
-		{
-			if (i == 0 || j == 0)
-				mlx_put_pixel(data->minimap, (x + j) / 4.00, (y + i) / 4.00, ft_pixel(150, 150, 150, 255));
-			else
-				mlx_put_pixel(data->minimap, (x + j) / 4.00, (y + i) / 4.00, sq_color);
-			j++;
-		}
-		i++;
-	}
-}
-
-void draw_pixels_to_map(data_t *data)
-{
-	int r, c, x, y;
-	int sq_color;
-
-	r = 0;
-	while (data->map_grid[r])
-	{
-		c = 0;
-		while (data->map_grid[r][c])
-		{
-			sq_color = set_color(data->map_grid[r][c]);
-			draw_one_grid(data, (c * data->grid_size), (r * data->grid_size), sq_color);
-			c++;
-		}
-		r++;
 	}
 }
 
@@ -148,9 +106,15 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 {
 	vect_t intercept;
 	double ystep, xstep;
-	int is_facing_down, is_facing_up, is_facing_right, is_facing_left;
-	double wall_hit_x = INT_MAX, wall_hit_y = INT_MAX;
+	int is_facing_down;
+	int is_facing_up;
+	int is_facing_right;
+	int is_facing_left;
+	double wall_hit_x;
+	double wall_hit_y;
 
+	wall_hit_x = INT_MAX;
+	wall_hit_y = INT_MAX;
 	is_facing_down = (angle > 0 && angle < 180);
 	is_facing_up = !is_facing_down;
 	is_facing_right = (angle < 90 || angle > 270);
@@ -210,67 +174,6 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 	ray.x_hit = wall_hit_x;
 	ray.y_hit = wall_hit_y;
 	return (ray);
-}
-
-hitRay_t draw_line_with_angle(data_t *data, float angle)
-{
-	hitRay_t ray;
-	hitRay_t hor = ft_get_horizontal_intersection(data, angle);
-	hitRay_t ver = ft_get_vertical_intersection(data, angle);
-	//
-	ray.distance = (hor.distance < ver.distance) ? hor.distance : ver.distance;
-	ray.is_horizontal = (hor.distance < ver.distance) ? 1 : 0;
-	ray.x_hit = (hor.distance < ver.distance) ? hor.x_hit : ver.x_hit;
-	ray.y_hit = (hor.distance < ver.distance) ? hor.y_hit : ver.y_hit;
-	ray.is_facing_down = (hor.distance < ver.distance) ? hor.is_facing_down : ver.is_facing_down;
-	ray.is_facing_up = (hor.distance < ver.distance) ? hor.is_facing_up : ver.is_facing_up;
-	ray.is_facing_left = (hor.distance < ver.distance) ? hor.is_facing_left : ver.is_facing_left;
-	ray.is_facing_right = (hor.distance < ver.distance) ? hor.is_facing_right : ver.is_facing_right;
-	
-	int color = ft_pixel(180, 32, 32, 255);
-	double x = data->player.x, y = data->player.y;
-	double end_x = x + ((ray.distance) * cos(angle * DEG_TO_RAD));
-	double end_y = y + ((ray.distance) * sin(angle * DEG_TO_RAD));
-	double steps = fabs(end_x - x) > fabs(end_y - y) ? fabs(end_x - x) : fabs(end_y - y);
-	double xIncrement = ((end_x - x) / steps);
-	double yIncrement = ((end_y - y) / steps);
-
-	for (int i = 0; i <= steps; i++)
-	{
-		if ((x >= 0 && x < data->map_width) && (y >= 0 && y < data->map_height))
-			mlx_put_pixel(data->minimap, x / 4.00, y / 4.00, color);
-		x += xIncrement;
-		y += yIncrement;
-	}
-	return (ray);
-}
-
-float normalize_angle(float angle)
-{
-	angle = fmod(angle, 360.0f);
-	if (angle < 0)
-		angle += 360.0f;
-	return angle;
-}
-
-void draw_fov(data_t *data)
-{
-	// first_angle
-	float angle = (data->player.rotation_angle - (data->fov_angle / 2));
-	angle = normalize_angle(angle);
-	float step = (data->fov_angle / data->game->width);
-	hitRay_t ray;
-	int ray_num = 0;
-	clear_screen(data);
-	while (ray_num < data->game->width)
-	{
-		ray = draw_line_with_angle(data, angle);
-		ray.distance = ray.distance * cos((angle - data->player.rotation_angle) * (DEG_TO_RAD));
-		draw_3d_walls(data, ray, ray_num);
-		ray_num++;
-		angle += step;
-		angle = normalize_angle(angle);
-	}
 }
 
 void draw_map(data_t *data)

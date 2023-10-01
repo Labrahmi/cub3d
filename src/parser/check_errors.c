@@ -6,34 +6,36 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 10:53:24 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/09/14 15:08:41 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/01 12:30:33 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int check_errors(t_data_maps *data, t_list *list)
+int	check_errors(t_data_maps *data)
 {
 	if (check_errors_textures(data->textures) == FALSE)
 		return (FALSE);
+	if (check_path_textures(data->textures) == FALSE)
+		return (FALSE);
 	if (check_errors_colors(data) == FALSE)
 		return (FALSE);
-	if (check_errors_map(data, list) == FALSE)
+	if (check_errors_map(data) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }
 
 int	check_errors_textures(char **textures)
 {
-	int i;
-	int	count;
-	char **tmp;
+	int		i;
+	int		count;
+	char	**tmp;
 
 	i = -1;
 	count = 0;
 	while (++i < 4)
 	{
-		if(textures[i])
+		if (textures[i])
 			count++;
 	}
 	if (count != 4)
@@ -43,15 +45,41 @@ int	check_errors_textures(char **textures)
 	{
 		tmp = ft_split(textures[i], ' ');
 		if (!tmp[1] || (tmp[1] && tmp[2]))
+			return (free_2d_array(tmp), FALSE);
+		free_2d_array(tmp);
+	}
+	return (TRUE);
+}
+
+int	check_path_textures(char **textures)
+{
+	int	i;
+	int	len;
+	int	start;
+	int	status;
+
+	i = -1;
+	while (++i < 4)
+	{
+		len = ft_strlen(textures[i]);
+		start = len;
+		if (!ft_strchr(textures[i], '.'))
 			return (FALSE);
-		free(tmp);
+		while (start-- > 0)
+		{
+			status = supp_check_path(textures, start, len, i);
+			if (status == FALSE)
+				return (FALSE);
+			if (status == TRUE)
+				break ;
+		}
 	}
 	return (TRUE);
 }
 
 int	check_errors_colors(t_data_maps *data)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < 3)
@@ -64,15 +92,17 @@ int	check_errors_colors(t_data_maps *data)
 	return (TRUE);
 }
 
-int check_errors_map(t_data_maps *data, t_list *list)
+int	check_errors_map(t_data_maps *data)
 {
-	(void) list;
-	t_corMap *posStart;
+	t_corMap	*pos_start;
 
-	if (check_intruderInMap(data->map) == FALSE)
+	pos_start = init_cor_map(data->map);
+	if (pos_start == FALSE)
 		return (FALSE);
-	posStart = init_corMap(data->map);
-	if (posStart == FALSE)
+	if (check_intruder_map(data->map) == FALSE)
+		return (FALSE);
+	data->posplayer = pos_start;
+	if (loop_for_map(data->map, data->count) == FALSE)
 		return (FALSE);
 	return (TRUE);
-}	
+}
