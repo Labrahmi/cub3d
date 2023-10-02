@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 11:54:28 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 10:55:40 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:13:38 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	fill_data_from_datamap(data_t *data, t_data_maps *map)
 		data->map_grid[i] = ft_strtrim(map->map[i], "\n");
 	data->c_color = ft_pixel(map->C[0], map->C[1], map->C[2], 255);
 	data->f_color = ft_pixel(map->F[0], map->F[1], map->F[2], 255);
-	destroy_data_map(map, TRUE);
 }
 
 void	ft_init(data_t *data, t_data_maps *map)
@@ -109,6 +108,7 @@ void	ft_init(data_t *data, t_data_maps *map)
 		+ (data->grid_size / 2);
 	data->player.y = (map->posplayer->y * data->grid_size)
 		+ (data->grid_size / 2);
+	destroy_data_map(map, TRUE);
 	data->player.rotation_angle = (map->posplayer->dir);
 	data->player.rotation_speed = 2;
 	data->player.move_speed = 2;

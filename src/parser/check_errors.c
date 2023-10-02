@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 10:53:24 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/01 12:30:33 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:38:06 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	check_errors(t_data_maps *data)
 {
 	if (check_errors_textures(data->textures) == FALSE)
-		return (FALSE);
+		return (printf("Error in textures !\n"), FALSE);
 	if (check_path_textures(data->textures) == FALSE)
-		return (FALSE);
+		return (printf("Error in PATH textures !\n"), FALSE);
 	if (check_errors_colors(data) == FALSE)
-		return (FALSE);
+		return (printf("Error in colors !\n"), FALSE);
 	if (check_errors_map(data) == FALSE)
-		return (FALSE);
+		return (printf("Error in map !\n"), FALSE);
 	return (TRUE);
 }
 
@@ -94,14 +94,12 @@ int	check_errors_colors(t_data_maps *data)
 
 int	check_errors_map(t_data_maps *data)
 {
-	t_corMap	*pos_start;
-
-	pos_start = init_cor_map(data->map);
-	if (pos_start == FALSE)
+	free(data->posplayer);
+	data->posplayer = init_cor_map(data->map);
+	if (data->posplayer == FALSE)
 		return (FALSE);
 	if (check_intruder_map(data->map) == FALSE)
 		return (FALSE);
-	data->posplayer = pos_start;
 	if (loop_for_map(data->map, data->count) == FALSE)
 		return (FALSE);
 	return (TRUE);

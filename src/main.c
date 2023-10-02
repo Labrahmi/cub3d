@@ -6,13 +6,13 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 07:30:15 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/10/01 12:57:26 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:45:16 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
 
-void	func(char **av, data_t *data)
+void	func(char **av, data_t __unused *data)
 {
 	t_data_maps	data_map;
 	int			fd;
@@ -22,15 +22,9 @@ void	func(char **av, data_t *data)
 		exit(EXIT_FAILURE);
 	init_data_map(&data_map);
 	if (read_map(fd, av[1], &data_map) == FALSE)
-	{
-		printf("Error\n");
 		destroy_data_map(&data_map, FALSE);
-	}
 	if (check_errors(&data_map) == FALSE)
-	{
-		printf("Error\n");
 		destroy_data_map(&data_map, FALSE);
-	}
 	ft_init(data, &data_map);
 }
 
@@ -53,7 +47,7 @@ int	check_extantion(char *path)
 int	main(int ac, char **av)
 {
 	data_t	*data;
-
+	
 	if (ac != 2)
 		return (1);
 	if (check_extantion(av[1]) == FALSE)

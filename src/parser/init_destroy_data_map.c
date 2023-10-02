@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:10:27 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 10:48:51 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:45:32 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ void	init_data_map(t_data_maps *data)
 		data->F[i] = -1;
 		data->C[i] = -1;
 	}
-	data->map = malloc(sizeof(char *) * (0 + 1));
-	data->map[0] = NULL;
+	data->map = malloc(sizeof(char *) * 1);
+	data->posplayer = malloc(sizeof(t_corMap));
+	data->map[0] = 0;
 }
 
 void	destroy_data_map(t_data_maps *data, int status)
@@ -40,6 +41,7 @@ void	destroy_data_map(t_data_maps *data, int status)
 	i = -1;
 	while (++i < 4)
 		free(data->textures[i]);
+	free(data->posplayer);
 	if (status == FALSE)
 		exit(EXIT_FAILURE);
 }

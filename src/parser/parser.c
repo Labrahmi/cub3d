@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 10:53:45 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 10:00:32 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:25:18 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	read_map(int fd, char *fileMap, t_data_maps *data)
 			break ;
 		get_textures(line, data, &pos);
 		if (get_color(line, data, &pos) == FALSE)
-			return (FALSE);
+			return (free(line), FALSE);
 		free(line);
 		index++;
 	}
@@ -46,10 +46,10 @@ void	get_textures(char *line, t_data_maps *data, int *pos)
 
 	line = ft_strtrim(line, " ");
 	tmp = ft_split(line, ' ');
-	if (!ft_strncmp(tmp[0], "NO", ft_strlen(tmp[0]))
-		|| !ft_strncmp(tmp[0], "SO", ft_strlen(tmp[0]))
-		|| !ft_strncmp(tmp[0], "WE", ft_strlen(tmp[0]))
-		|| !ft_strncmp(tmp[0], "EA", ft_strlen(tmp[0])))
+	if (!ft_strncmp(tmp[0], "NO", 3)
+		|| !ft_strncmp(tmp[0], "SO", 3)
+		|| !ft_strncmp(tmp[0], "WE", 3)
+		|| !ft_strncmp(tmp[0], "EA", 3))
 	{
 		if (ft_strncmp(tmp[0], "NO", ft_strlen(tmp[0])) == 0)
 			data->textures[0] = ft_strdup(line);
@@ -76,12 +76,18 @@ int	get_color(char *line, t_data_maps *data, int *pos)
 		if (!ft_strncmp(tmp[0], "F", -1))
 		{
 			if (split_color(data, line, 'F') == FALSE)
+			{
+				printf("Error in color F !\n"); 
 				return (free(line), free_2d_array(tmp), FALSE);
+			}
 		}
 		else if (!ft_strncmp(tmp[0], "C", -1))
 		{
 			if (split_color(data, line, 'C') == FALSE)
+			{
+				printf("Error in color C !\n");
 				return (free(line), free_2d_array(tmp), FALSE);
+			}
 		}
 		(*pos)++;
 	}
@@ -123,7 +129,7 @@ void	get_map(char *fileMap, t_data_maps *data, int pos, int count)
 
 	fd = open(fileMap, O_RDONLY);
 	i = -1;
-	while (++i <= pos)
+	while (++i < pos)
 	{
 		line = get_next_line(fd);
 		free(line);

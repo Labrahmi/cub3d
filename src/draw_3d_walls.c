@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:49:03 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/10/02 11:22:18 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 12:10:07 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,24 @@ void	draw_wall_column(data_t *data, vect_t v1,
 	if (ray.is_horizontal)
 	{
 		texture = data->texture_S;
-		if (ray.is_facing_up)
-			texture = data->texture_N;
 		width_ratio = (float)((float)texture->width / (float) data->grid_size);
-		c_tex.x = fmod(ray.x_hit, data->grid_size) * (width_ratio);
+		c_tex.x = texture->width - fmod(ray.x_hit, data->grid_size) * (width_ratio);
+		if (ray.is_facing_up)
+		{
+			texture = data->texture_N;
+			c_tex.x = fmod(ray.x_hit, data->grid_size) * (width_ratio);
+		}
 	}
 	else
 	{
 		texture = data->texture_W;
-		if (ray.is_facing_left)
-			texture = data->texture_E;
 		width_ratio = (float)((float) texture->width / (float) data->grid_size);
 		c_tex.x = fmod(ray.y_hit, data->grid_size) * (width_ratio);
+		if (ray.is_facing_left)
+		{
+			texture = data->texture_E;
+			c_tex.x = texture->width - fmod(ray.y_hit, data->grid_size) * (width_ratio);
+		}
 	}
 	draw_one_culumn_textur(data, c_img, c_tex, columnHeight, texture);
 }
