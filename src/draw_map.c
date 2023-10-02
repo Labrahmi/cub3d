@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/10/01 15:48:03 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/10/02 11:23:57 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void draw_player(data_t *data)
 		j = 0;
 		while (j < size)
 		{
-			mlx_put_pixel(data->minimap, (x + j) / 1.00, (y + i) / 1.00, ft_pixel(30, 30, 192, 150));
+			mlx_put_pixel(data->minimap, (x + j) / 1.50, (y + i) / 1.50, ft_pixel(30, 30, 192, 150));
 			j++;
 		}
 		i++;

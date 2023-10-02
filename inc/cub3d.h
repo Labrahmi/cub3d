@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/10/01 12:30:10 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 10:57:20 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ int aspects_zero(char **map, int i, int j, int count);
 void	ft_init(data_t *data, t_data_maps *map);
 void	fill_data_from_datamap(data_t *data, t_data_maps *map);
 int		calculate_res(char **map, int mode);
+void	ft_check_textures(data_t *data, t_data_maps *map);
+int		ft_destroy_textures(mlx_texture_t **texts);
 
 // ==========   DRAW_MAP FUNCTIONS      ===============
 

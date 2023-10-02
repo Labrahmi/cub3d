@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_pixels.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 11:55:04 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/01 15:48:03 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/10/02 11:23:57 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ void	draw_one_grid(data_t *data, int x, int y, int sq_color)
 		while (j < (data->grid_size))
 		{
 			// if (i == 0 || j == 0)
-			// 	mlx_put_pixel(data->minimap, (x + j) / 1.00, (y + i)
-			// 		/ 1.00, ft_pixel(150, 150, 150, 150));
+			// 	mlx_put_pixel(data->minimap, (x + j) / 1.50, (y + i)
+			// 		/ 1.50, ft_pixel(150, 150, 150, 150));
 			// else
-				mlx_put_pixel(data->minimap, (x + j) / 1.00, (y + i)
-					/ 1.00, sq_color);
+				mlx_put_pixel(data->minimap, (x + j) / 1.50, (y + i)
+					/ 1.50, sq_color);
 			j++;
 		}
 		i++;

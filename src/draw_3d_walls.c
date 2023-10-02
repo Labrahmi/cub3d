@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_3d_walls.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 16:49:03 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/10/01 15:22:03 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/10/02 11:22:18 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	draw_one_culumn_textur(data_t *data, vect_t c_img, vect_t c_tex, float colu
 		{
 			pixelx = &texture->pixels[(((int) c_tex.y * texture->width) + x) * texture->bytes_per_pixel];
 			pixeli = &data->game->pixels[((y2 * data->game->width) + x2) * texture->bytes_per_pixel];
-			memmove(pixeli, pixelx, texture->bytes_per_pixel);
+			ft_memmove(pixeli, pixelx, texture->bytes_per_pixel);
 		}
 		y2++;
 		y++;

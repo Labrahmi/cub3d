@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 11:54:28 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/01 15:37:04 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/10/02 10:55:40 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	calculate_res(char **map, int mode)
 	{
 		if (i == 0)
 			max = ft_strlen(map[i]);
-		if ((int) ft_strlen(map[i]) > max)
+		if ((int)ft_strlen(map[i]) > max)
 			max = strlen(map[i]);
 		i++;
 	}
@@ -33,29 +33,67 @@ int	calculate_res(char **map, int mode)
 	return (0);
 }
 
+int	ft_destroy_textures(mlx_texture_t **texts)
+{
+	int	ids[4];
+	int	err;
+	int	i;
+
+	i = -1;
+	err = 0;
+	while (++i < 4)
+	{
+		ids[i] = 0;
+		if (!texts[i])
+		{
+			err = 1;
+			ids[i] = 1;
+		}
+	}
+	i = -1;
+	while (++i < 4 && err)
+	{
+		if (ids[i] == 0)
+			mlx_delete_texture(texts[i]);
+	}
+	return (err);
+}
+
+void	ft_check_textures(data_t *data, t_data_maps *map)
+{
+	mlx_texture_t	*texts[4];
+	int				mode;
+
+	texts[0] = mlx_load_png(map->textures[0]);
+	texts[1] = mlx_load_png(map->textures[1]);
+	texts[2] = mlx_load_png(map->textures[2]);
+	texts[3] = mlx_load_png(map->textures[3]);
+	mode = ft_destroy_textures(texts);
+	if (mode)
+	{
+		free(data);
+		destroy_data_map(map, FALSE);
+	}
+	data->texture_N = texts[0];
+	data->texture_S = texts[1];
+	data->texture_E = texts[2];
+	data->texture_W = texts[3];
+}
+
 void	fill_data_from_datamap(data_t *data, t_data_maps *map)
 {
 	int	i;
 
+	ft_check_textures(data, map);
 	data->columns = calculate_res(map->map, 1);
 	data->rows = calculate_res(map->map, 2);
-	data->map_grid = (char **) calloc(sizeof(char *), data->rows + 1);
+	data->map_grid = (char **)calloc(sizeof(char *), data->rows + 1);
 	i = -1;
 	while (map->map[++i])
-	{
 		data->map_grid[i] = ft_strtrim(map->map[i], "\n");
-		free(map->map[i]);
-	}
-	free(map->map);
-	data->texture_N = mlx_load_png(map->textures[0]);
-	data->texture_S = mlx_load_png(map->textures[1]);
-	data->texture_E = mlx_load_png(map->textures[2]);
-	data->texture_W = mlx_load_png(map->textures[3]);
-	i = -1;
-	while (++i < 4)
-		free(map->textures[i]);
 	data->c_color = ft_pixel(map->C[0], map->C[1], map->C[2], 255);
 	data->f_color = ft_pixel(map->F[0], map->F[1], map->F[2], 255);
+	destroy_data_map(map, TRUE);
 }
 
 void	ft_init(data_t *data, t_data_maps *map)

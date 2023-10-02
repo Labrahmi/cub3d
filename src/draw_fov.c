@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_fov.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 12:23:23 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/01 15:55:24 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/10/02 11:23:57 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,6 @@ hitRay_t	draw_line_with_angle(data_t *data, float angle, int i)
 
 	difination_ray(&ray, data, angle);
 	utils.color = ft_pixel(180, 32, 32, 150);
-	if (ray.is_horizontal)
-		utils.color = ft_pixel(32, 32, 180, 150);
-
 	utils.x = data->player.x;
 	utils.y = data->player.y;
 	utils.end_x = utils.x + ((ray.distance) * cos(angle * DEG_TO_RAD));
@@ -91,8 +88,8 @@ hitRay_t	draw_line_with_angle(data_t *data, float angle, int i)
 	{
 		if ((utils.x >= 0 && utils.x < data->map_width)
 			&& (utils.y >= 0 && utils.y < data->map_height))
-			mlx_put_pixel(data->minimap, utils.x / 1.00,
-				utils.y / 1.00, utils.color);
+			mlx_put_pixel(data->minimap, utils.x / 1.50,
+				utils.y / 1.50, utils.color);
 		utils.x += utils.xIncrement;
 		utils.y += utils.yIncrement;
 	}

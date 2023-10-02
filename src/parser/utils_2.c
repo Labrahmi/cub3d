@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:04:38 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/01 15:36:23 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/10/02 10:56:25 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	check_input_colors(char	**str)
 {
-	int	i;
-	int	j;
-	char *tmp;
+	int		i;
+	int		j;
+	char	*tmp;
 
 	i = -1;
 	while (str[++i])
@@ -26,10 +26,11 @@ int	check_input_colors(char	**str)
 		while (tmp[++j])
 		{
 			if (tmp[0] == '\n')
-				return (FALSE);
+				return (free(tmp), FALSE);
 			if (tmp[j] != '\n' && (tmp[j] < '0' || tmp[j] > '9'))
-				return (FALSE);
+				return (free(tmp), FALSE);
 		}
+		free(tmp);
 	}
 	return (TRUE);
 }
@@ -38,13 +39,9 @@ int	split_color(t_data_maps *data, char *line, char c)
 {
 	int		i;
 	char	**tmp;
-	char	*tmp1;
-	char	*join;
 
 	i = -1;
-	join = ft_strjoin(&c, " ");
-	line = ft_strtrim(line, join);
-	free(join);
+	line = ft_strdup(&line[1]);
 	tmp = ft_split(line, ',');
 	if (check_input_colors(tmp) == FALSE)
 		return (free(line), free_2d_array(tmp), FALSE);
@@ -54,11 +51,10 @@ int	split_color(t_data_maps *data, char *line, char c)
 			return (free(line), free_2d_array(tmp), FALSE);
 		if (tmp[i])
 		{
-			tmp1 = ft_strtrim(tmp[i], " ");
 			if (c == 'F')
-				data->F[i] = ft_atoi(tmp1);
+				data->F[i] = ft_atoi(tmp[i]);
 			else
-				data->C[i] = ft_atoi(tmp1);
+				data->C[i] = ft_atoi(tmp[i]);
 		}
 	}
 	return (free(line), free_2d_array(tmp), TRUE);
