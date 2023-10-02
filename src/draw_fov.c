@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_fov.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 12:23:23 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 11:23:57 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 23:01:09 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	clear_screen(data_t *data)
 		x = -1;
 		while (++x < (int) data->game->width)
 		{
-			if (y > (int) (data->game->height / 2))
+			if (y > (int)(data->game->height / 2))
 				mlx_put_pixel(data->game, x, y, data->f_color);
 			else
 				mlx_put_pixel(data->game, x, y, data->c_color);
@@ -102,7 +102,7 @@ void	draw_fov(data_t *data)
 	float		step;
 	hitRay_t	ray;
 	int			ray_num;
-	int i;
+	int			i;
 
 	angle = (data->player.rotation_angle - (data->fov_angle / 2));
 	angle = normalize_angle(angle);

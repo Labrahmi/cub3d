@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/31 22:44:46 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/10/02 11:23:57 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 19:19:50 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ hitRay_t ft_get_vertical_intersection(data_t *data, double angle)
 		double x_to_check = 0;
 		double y_to_check = 0;
 		int grid_x = 0, grid_y = 0;
-		while ((intercept.x >= 0 && intercept.x < data->minimap->width) && (intercept.y >= 0 && intercept.y < data->minimap->width))
+		while ((intercept.x >= 0 && intercept.x < data->minimap->width) && (intercept.y >= 0 && intercept.y < data->minimap->height))
 		{
 			y_to_check = intercept.y;
 			x_to_check = intercept.x;
@@ -144,7 +144,7 @@ hitRay_t ft_get_horizontal_intersection(data_t *data, double angle)
 		double x_to_check;
 		double y_to_check;
 		int grid_x, grid_y;
-		while (intercept.x >= 0 && intercept.x < data->minimap->width && intercept.y >= 0 && intercept.y < data->minimap->width)
+		while ((intercept.x >= 0 && intercept.x < data->minimap->width) && (intercept.y >= 0 && intercept.y < data->minimap->height))
 		{
 			x_to_check = intercept.x;
 			y_to_check = intercept.y;

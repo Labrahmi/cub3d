@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_pixels.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 11:55:04 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 11:23:57 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 23:05:08 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@ int	set_color(char position)
 	return (sq_color);
 }
 
-void	draw_one_grid(data_t *data, int x, int y, int sq_color)
+void	draw_one_grid(data_t *data, int x, int y, int clr)
 {
 	int	i;
 	int	j;
-	(void)	x;
-	(void)	y;
 
 	i = 0;
 	while (i < (data->grid_size))
@@ -42,12 +40,7 @@ void	draw_one_grid(data_t *data, int x, int y, int sq_color)
 		j = 0;
 		while (j < (data->grid_size))
 		{
-			// if (i == 0 || j == 0)
-			// 	mlx_put_pixel(data->minimap, (x + j) / 1.50, (y + i)
-			// 		/ 1.50, ft_pixel(150, 150, 150, 150));
-			// else
-				mlx_put_pixel(data->minimap, (x + j) / 1.50, (y + i)
-					/ 1.50, sq_color);
+			mlx_put_pixel(data->minimap, (x + j) / 1.50, (y + i) / 1.5, clr);
 			j++;
 		}
 		i++;
@@ -58,7 +51,7 @@ void	draw_pixels_to_map(data_t *data)
 {
 	int	r;
 	int	c;
-	int	sq_color;
+	int	clr;
 
 	r = 0;
 	while (data->map_grid[r])
@@ -66,9 +59,8 @@ void	draw_pixels_to_map(data_t *data)
 		c = 0;
 		while (data->map_grid[r][c])
 		{
-			sq_color = set_color(data->map_grid[r][c]);
-			draw_one_grid(data, (c * data->grid_size),
-				(r * data->grid_size), sq_color);
+			clr = set_color(data->map_grid[r][c]);
+			draw_one_grid(data, c * data->grid_size, r * data->grid_size, clr);
 			c++;
 		}
 		r++;

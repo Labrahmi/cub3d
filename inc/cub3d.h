@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/10/02 10:57:20 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 22:45:21 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,13 @@ typedef struct vect_s
 	double y;
 } vect_t;
 
+typedef struct int_vect_s
+{
+	int x;
+	int y;
+}	int_vect_t;
+
+
 typedef struct hitRay_s
 {
 	double distance;
@@ -125,6 +132,27 @@ typedef struct s_utils
 	double	xIncrement;
 	double	yIncrement;
 }	t_utils;
+
+
+typedef struct s_3d_data
+{
+	int_vect_t	v1;
+	int_vect_t	v2;
+	uint8_t		*pixeli;
+	uint8_t		*pixelx;
+}	t_3d_data;
+
+typedef struct draw_3d_walls_s
+{
+	float			ch;
+	mlx_texture_t	*texture;
+	data_t			*data;
+	vect_t			c_img;
+	vect_t			c_tex;
+}	draw_3d_walls_t;
+
+
+
 
 // =========	parsing map functions	=========
 void	init_data_map(t_data_maps *data);
@@ -189,7 +217,8 @@ void ft_turn_player(void *param);
 void ft_hooks(data_t *data);
 
 // 3d
-float cast_ray(data_t *data, float angle);
+// float cast_ray(data_t *data, float angle);
 void draw_3d_walls(data_t *data, hitRay_t ray, int ray_num);
-
+draw_3d_walls_t ft_get_hor_3d_data(data_t *data, hitRay_t ray);
+draw_3d_walls_t ft_get_ver_3d_data(data_t *data, hitRay_t ray);
 

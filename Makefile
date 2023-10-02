@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+         #
+#    By: macbook <macbook@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/10/01 12:05:48 by ayakoubi         ###   ########.fr        #
+#    Updated: 2023/10/02 23:06:27 by macbook          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCDIR	 	=	src
 PRSDIR		=	parser
 OBJDIR		=	obj
 
-SRCS		:=	main init drawing_tools draw_map draw_pixels draw_fov hooks draw_3d_walls move_player
+SRCS		:=	main init draw_map draw_pixels draw_fov hooks draw_3d_walls move_player draw_3d_walls_tools
 PARSERSRC	:=	parser init_destroy_data_map check_errors utils utils_2
 
 SRC				:=      $(addprefix $(SRCDIR)/, $(addsuffix .c, $(SRCS)))

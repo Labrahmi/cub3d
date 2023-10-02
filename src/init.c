@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 11:54:28 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 15:13:38 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/02 19:21:13 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	fill_data_from_datamap(data_t *data, t_data_maps *map)
 void	ft_init(data_t *data, t_data_maps *map)
 {
 	fill_data_from_datamap(data, map);
-	data->mlx = mlx_init(1080, 1000, "cub3d", false);
+	data->mlx = mlx_init(768, 768, "cub3d", false);
 	if (!(data->mlx))
 		exit(EXIT_FAILURE);
 	data->grid_size = 12;
@@ -114,7 +114,7 @@ void	ft_init(data_t *data, t_data_maps *map)
 	data->player.move_speed = 2;
 	data->fov_angle = 60;
 	data->minimap = mlx_new_image(data->mlx, data->map_width, data->map_height);
-	data->game = mlx_new_image(data->mlx, 1080, 1000);
+	data->game = mlx_new_image(data->mlx, 768, 768);
 	draw_map(data);
 	mlx_image_to_window(data->mlx, data->game, 0, 0);
 	mlx_image_to_window(data->mlx, data->minimap, 15, 15);
