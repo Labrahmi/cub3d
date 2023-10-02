@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 12:23:23 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 23:01:09 by macbook          ###   ########.fr       */
+/*   Updated: 2023/10/03 00:29:50 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,37 @@ void	clear_screen(data_t *data)
 	}
 }
 
+
+
+common_data_t	init_common_data(float angle, data_t __unused *data, hitRay_t *ray)
+{
+	common_data_t comm;
+
+	comm.ray = ray;
+	comm.ray->is_facing_down = (angle > 0 && angle <= 180);
+	comm.ray->is_facing_up = !comm.ray->is_facing_down;
+	comm.ray->is_facing_right = (angle < 90 || angle > 270);
+	comm.ray->is_facing_left = !comm.ray->is_facing_right;
+	comm.wall_hit_x = INT_MAX;
+	comm.wall_hit_y = INT_MAX;
+	comm.x_to_check = 0;
+	comm.y_to_check = 0;
+	comm.gx = 0;
+	comm.gy = 0;
+	return comm;
+}
+
 void	difination_ray(hitRay_t *ray, data_t *data, float angle)
 {
-	hitRay_t	hor;
-	hitRay_t	ver;
-	int			var1;
-	int			var2;
+	hitRay_t		hor;
+	hitRay_t		ver;
+	int				var1;
+	int				var2;
+	common_data_t	comm;
 
-	hor = ft_get_horizontal_intersection(data, angle);
-	ver = ft_get_vertical_intersection(data, angle);
+	comm = init_common_data(angle, data, ray);
+	hor = get_horizontal_intersect(data, angle, comm);
+	ver = get_vertical_intersect(data, angle, comm);
 	var1 = 0;
 	var2 = 0;
 	if (hor.distance < ver.distance)

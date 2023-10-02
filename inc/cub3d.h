@@ -6,7 +6,7 @@
 /*   By: macbook <macbook@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/10/02 22:45:21 by macbook          ###   ########.fr       */
+/*   Updated: 2023/10/03 00:29:50 by macbook          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,18 @@ typedef struct draw_3d_walls_s
 	vect_t			c_tex;
 }	draw_3d_walls_t;
 
+typedef struct common_data_s
+{
+	vect_t		intercept;
+	double		ystep, xstep;
+	double		wall_hit_x;
+	double		wall_hit_y;
+	hitRay_t	*ray;
+	double		x_to_check;
+	double		y_to_check;
+	int			gx;
+	int			gy;
+}	common_data_t;
 
 
 
@@ -198,16 +210,16 @@ float		normalize_angle(float angle);
 void		clear_screen(data_t *data);
 hitRay_t	draw_line_with_angle(data_t *data, float angle, int i);
 void		difination_ray(hitRay_t *ray, data_t *data, float angle);
-hitRay_t	ft_get_horizontal_intersection(data_t *data, double angle);
-hitRay_t	ft_get_vertical_intersection(data_t *data, double angle);
+hitRay_t	get_horizontal_intersect(data_t *data, double angle, common_data_t comm);
+hitRay_t	get_vertical_intersect(data_t *data, double angle, common_data_t comm);
 // ----------------- Function Prototypes --------------------
 
 // Drawing
 int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 int set_color(char position);
 
-void draw_player(data_t *data);
-void draw_map(data_t *data);
+void	draw_player(data_t *data, int32_t clr);
+void	draw_map(data_t *data);
 
 
 // ===========	HOOKS ==============
