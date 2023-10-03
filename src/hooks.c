@@ -91,6 +91,6 @@ void	ft_hooks(data_t *data)
 	mlx_loop_hook(data->mlx, ft_move_player, data);
 	mlx_loop_hook(data->mlx, ft_turn_player, data);
 	mlx_loop_hook(data->mlx, ft_general_hooks, data);
-	// mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
-	// mlx_cursor_hook(data->mlx, (mlx_cursorfunc) mouse_hook, data);
+//	mlx_set_cursor_mode(data->mlx, MLX_MOUSE_DISABLED);
+//	mlx_cursor_hook(data->mlx, (mlx_cursorfunc) mouse_hook, data);
 }

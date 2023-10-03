@@ -39,11 +39,9 @@ void	clear_screen(data_t *data)
 	}
 }
 
-
-
-common_data_t	init_common_data(float angle, data_t __unused *data, hitRay_t *ray)
+common_data_t	init_common_data(float angle, data_t *data, hitRay_t *ray)
 {
-	common_data_t comm;
+	common_data_t	comm;
 
 	comm.ray = ray;
 	comm.ray->is_facing_down = (angle > 0 && angle <= 180);
@@ -56,37 +54,36 @@ common_data_t	init_common_data(float angle, data_t __unused *data, hitRay_t *ray
 	comm.y_to_check = 0;
 	comm.gx = 0;
 	comm.gy = 0;
-	return comm;
+	return (comm);
 }
 
 void	difination_ray(hitRay_t *ray, data_t *data, float angle)
 {
-	hitRay_t		hor;
-	hitRay_t		ver;
-	int				var1;
-	int				var2;
+	hitRay_t	hor;
+	hitRay_t	ver;
+	int			var[2];
 	common_data_t	comm;
 
 	comm = init_common_data(angle, data, ray);
 	hor = get_horizontal_intersect(data, angle, comm);
 	ver = get_vertical_intersect(data, angle, comm);
-	var1 = 0;
-	var2 = 0;
+	var[0] = 0;
+	var[1] = 0;
 	if (hor.distance < ver.distance)
-		var1 = 1;
+		var[0] = 1;
 	else
-		var2 = 1;
-	ray->distance = (var1 * hor.distance) + (ver.distance * var2);
-	ray->is_horizontal = (var1 * 1) + (var2 * 0);
-	ray->x_hit = (var1 * hor.x_hit) + (var2 * ver.x_hit);
-	ray->y_hit = (var1 * hor.y_hit) + (var2 * ver.y_hit);
-	ray->is_facing_down = (var1 * hor.is_facing_down)
-		+ (var2 * ver.is_facing_down);
-	ray->is_facing_up = (var1 * hor.is_facing_up) + (var2 * ver.is_facing_up);
-	ray->is_facing_left = (var1 * hor.is_facing_left)
-		+ (var2 * ver.is_facing_left);
-	ray->is_facing_right = (var1 * hor.is_facing_right)
-		+ (var2 * ver.is_facing_right);
+		var[1] = 1;
+	ray->distance = (var[0] * hor.distance) + (ver.distance * var[1]);
+	ray->is_horizontal = (var[0] * 1) + (var[1] * 0);
+	ray->x_hit = (var[0] * hor.x_hit) + (var[1] * ver.x_hit);
+	ray->y_hit = (var[0] * hor.y_hit) + (var[1] * ver.y_hit);
+	ray->is_facing_down = (var[0] * hor.is_facing_down)
+		+ (var[1] * ver.is_facing_down);
+	ray->is_facing_up = (var[0] * hor.is_facing_up) + (var[1] * ver.is_facing_up);
+	ray->is_facing_left = (var[0] * hor.is_facing_left)
+		+ (var[1] * ver.is_facing_left);
+	ray->is_facing_right = (var[0] * hor.is_facing_right)
+		+ (var[1] * ver.is_facing_right);
 }
 
 hitRay_t	draw_line_with_angle(data_t *data, float angle, int i)

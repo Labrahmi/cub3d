@@ -12,7 +12,7 @@
 
 #include "../inc/cub3d.h"
 
-void	func(char **av, data_t __unused *data)
+void	func(char **av, data_t *data)
 {
 	t_data_maps	data_map;
 	int			fd;

@@ -18,17 +18,17 @@ IMLX	= -I MLX42/include
 ########## COMMPILATION ##############
 CC = cc
 MLX = MLX42/build/libmlx42.a
-FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
+FRAMEWORKS = MLX42/build/libmlx42.a -Iinclude -ldl -lglfw -pthread -lm
 GLFW = -I include -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
 ARCH = MLX42/build/libmlx42.a
-CFLAGS =  -Wall -Wextra -Werror #-fsanitize=address -g
+CFLAGS =  #-Wall -Wextra -Werror #-fsanitize=address -g
 
 ######### SRCS & OBJS ###############
 SRCDIR	 	=	src
 PRSDIR		=	parser
 OBJDIR		=	obj
 
-SRCS		:=	main init draw_map draw_pixels draw_fov hooks draw_3d_walls move_player draw_3d_walls_tools
+SRCS		:=	main init draw_map draw_pixels draw_fov hooks draw_3d_walls move_player draw_3d_walls_tools hor_vert_intersection
 PARSERSRC	:=	parser init_destroy_data_map check_errors utils utils_2
 
 SRC				:=      $(addprefix $(SRCDIR)/, $(addsuffix .c, $(SRCS)))
@@ -79,7 +79,7 @@ $(NAME):	$(OBJ) $(PARSEROBJ)
 	@$(C_GNL) -s
 	@echo "$(GREEN)$(BOLD)Creating >>>>>>>$(AR_GNL)$(B_END)$(C_END)"
 	@$(C_MLX)
-	@$(CC) $(CFLAGS) $(MLX) $(FRAMEWORKS) $(GLFW) $^ $(AR_LIBFT) $(AR_PRINTF) $(AR_GNL) $(ARCH) -I $(INC) $(IMLX) -o $@
+	@$(CC) $(CFLAGS) $(MLX) $(GLFW) $^ $(AR_LIBFT) $(AR_PRINTF) $(AR_GNL) $(ARCH) $(FRAMEWORKS) -I $(INC) $(IMLX) -o $@
 	@echo "  $(GREEN) $(BOLD) <<<<<< Done successful! >>>>>>$(B_END) $(C_END)"
 
 clean:
