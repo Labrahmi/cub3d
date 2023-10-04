@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 11:54:28 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 15:13:38 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/04 09:48:28 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_destroy_textures(mlx_texture_t **texts)
 	return (err);
 }
 
-void	ft_check_textures(data_t *data, t_data_maps *map)
+void	ft_check_textures(t_data *data, t_data_maps *map)
 {
 	mlx_texture_t	*texts[4];
 	int				mode;
@@ -74,13 +74,13 @@ void	ft_check_textures(data_t *data, t_data_maps *map)
 		free(data);
 		destroy_data_map(map, FALSE);
 	}
-	data->texture_N = texts[0];
-	data->texture_S = texts[1];
-	data->texture_E = texts[2];
-	data->texture_W = texts[3];
+	data->texture_n = texts[0];
+	data->texture_s = texts[1];
+	data->texture_e = texts[2];
+	data->texture_w = texts[3];
 }
 
-void	fill_data_from_datamap(data_t *data, t_data_maps *map)
+void	fill_data_from_datamap(t_data *data, t_data_maps *map)
 {
 	int	i;
 
@@ -91,11 +91,11 @@ void	fill_data_from_datamap(data_t *data, t_data_maps *map)
 	i = -1;
 	while (map->map[++i])
 		data->map_grid[i] = ft_strtrim(map->map[i], "\n");
-	data->c_color = ft_pixel(map->C[0], map->C[1], map->C[2], 255);
-	data->f_color = ft_pixel(map->F[0], map->F[1], map->F[2], 255);
+	data->c_color = ft_pixel(map->c[0], map->c[1], map->c[2], 255);
+	data->f_color = ft_pixel(map->f[0], map->f[1], map->f[2], 255);
 }
 
-void	ft_init(data_t *data, t_data_maps *map)
+void	ft_init(t_data *data, t_data_maps *map)
 {
 	fill_data_from_datamap(data, map);
 	data->mlx = mlx_init(1080, 1000, "cub3d", false);
@@ -109,7 +109,7 @@ void	ft_init(data_t *data, t_data_maps *map)
 	data->player.y = (map->posplayer->y * data->grid_size)
 		+ (data->grid_size / 2);
 	destroy_data_map(map, TRUE);
-	data->player.rotation_angle = (map->posplayer->dir);
+	data->player.rot_ang = (map->posplayer->dir);
 	data->player.rotation_speed = 2;
 	data->player.move_speed = 2;
 	data->fov_angle = 60;

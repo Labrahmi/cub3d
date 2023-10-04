@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 11:55:04 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 11:23:57 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/04 10:07:26 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@ int	set_color(char position)
 	return (sq_color);
 }
 
-void	draw_one_grid(data_t *data, int x, int y, int sq_color)
+void	draw_one_grid(t_data *data, int x, int y, int sq_color)
 {
 	int	i;
 	int	j;
-	(void)	x;
-	(void)	y;
 
 	i = 0;
 	while (i < (data->grid_size))
@@ -42,19 +40,15 @@ void	draw_one_grid(data_t *data, int x, int y, int sq_color)
 		j = 0;
 		while (j < (data->grid_size))
 		{
-			// if (i == 0 || j == 0)
-			// 	mlx_put_pixel(data->minimap, (x + j) / 1.50, (y + i)
-			// 		/ 1.50, ft_pixel(150, 150, 150, 150));
-			// else
-				mlx_put_pixel(data->minimap, (x + j) / 1.50, (y + i)
-					/ 1.50, sq_color);
+			mlx_put_pixel(data->minimap, (x + j) / 1.50, (y + i)
+				/ 1.50, sq_color);
 			j++;
 		}
 		i++;
 	}
 }
 
-void	draw_pixels_to_map(data_t *data)
+void	draw_pixels_to_map(t_data *data)
 {
 	int	r;
 	int	c;

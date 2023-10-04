@@ -6,7 +6,7 @@
 #    By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/10/01 12:05:48 by ayakoubi         ###   ########.fr        #
+#    Updated: 2023/10/04 11:43:47 by ayakoubi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,9 @@ SRCDIR	 	=	src
 PRSDIR		=	parser
 OBJDIR		=	obj
 
-SRCS		:=	main init drawing_tools draw_map draw_pixels draw_fov hooks draw_3d_walls move_player
-PARSERSRC	:=	parser init_destroy_data_map check_errors utils utils_2
+SRCS		:=	main init draw_map draw_pixels draw_fov hooks draw_3d_walls \
+				draw_3d_walls_tools move_player draw_map_tool draw_fov_tool
+PARSERSRC	:=	parser init_destroy_data_map check_errors utils utils_2 
 
 SRC				:=      $(addprefix $(SRCDIR)/, $(addsuffix .c, $(SRCS)))
 OBJ             :=      $(addprefix $(OBJDIR)/, $(addsuffix .o, $(SRCS)))
@@ -49,12 +50,10 @@ RESET = \033[0m
 #########	UTILES	###########
 
 C_LIBFT         =       make -C libft
-C_PRINTF        =       make -C ft_printf
 C_GNL           =       make -C gnl
 C_MLX		=	#make -C mlx
 
 AR_LIBFT        =       libft/libft.a
-AR_PRINTF       =       ft_printf/libftprintf.a
 AR_GNL          =       gnl/get_next_line
 AR_MLX		=#	mlx/libmlx.a
 
@@ -74,27 +73,23 @@ $(NAME):	$(OBJ) $(PARSEROBJ)
 	@$(C_LIBFT) -s
 	@make -C libft bonus
 	@echo "$(GREEN)$(BOLD)Creating >>>>>> $(AR_LIBFT)$(B_END)$(C_END)"
-	@$(C_PRINTF) -s
-	@echo "$(GREEN)$(BOLD)Creating >>>>>> $(AR_PRINTF)$(B_END)$(C_END)"
 	@$(C_GNL) -s
 	@echo "$(GREEN)$(BOLD)Creating >>>>>>>$(AR_GNL)$(B_END)$(C_END)"
 	@$(C_MLX)
-	@$(CC) $(CFLAGS) $(MLX) $(FRAMEWORKS) $(GLFW) $^ $(AR_LIBFT) $(AR_PRINTF) $(AR_GNL) $(ARCH) -I $(INC) $(IMLX) -o $@
+	@$(CC) $(CFLAGS) $(MLX) $(FRAMEWORKS) $(GLFW) $^ $(AR_LIBFT) $(AR_GNL) $(ARCH) -I $(INC) $(IMLX) -o $@
 	@echo "  $(GREEN) $(BOLD) <<<<<< Done successful! >>>>>>$(B_END) $(C_END)"
 
 clean:
 	@echo " $(RED)$(BOLD)REMOVED OBJECTS$(B_END)$(C_END)"
 	@$(C_LIBFT) clean
-	@$(C_PRINTF) clean
 	@$(C_GNL) clean
 	@rm -rf $(OBJDIR)
 	
 fclean: clean
 	@rm -rf $(NAME)
 	@$(C_LIBFT) fclean
-	@$(C_PRINTF) fclean
 	@$(C_GNL) fclean
-	@echo "$(RED)$(BOLD)removed $(AR_LIBFT)\nremoved $(AR_PRINTF)\nremoved $(NAME)$(B_END)$(C_END)"
+	@echo "$(RED)$(BOLD)removed $(AR_LIBFT)\nremoved $(NAME)$(B_END)$(C_END)"
 
 re:	fclean all
 

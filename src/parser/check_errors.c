@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 10:53:24 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 15:38:06 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/04 09:45:58 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ int	check_errors_colors(t_data_maps *data)
 	i = -1;
 	while (++i < 3)
 	{
-		if (data->F[i] < 0 || data->F[i] > 255)
+		if (data->f[i] < 0 || data->f[i] > 255)
 			return (FALSE);
-		if (data->C[i] < 0 || data->C[i] > 255)
+		if (data->c[i] < 0 || data->c[i] > 255)
 			return (FALSE);
 	}
 	return (TRUE);

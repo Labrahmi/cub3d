@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   MLX42.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: W2Wizard <main@w2wizard.dev>                 +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/28 02:29:06 by W2Wizard      #+#    #+#                 */
-/*   Updated: 2023/03/30 16:23:19 by ntamayo-      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   MLX42.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/28 02:29:06 by W2Wizard          #+#    #+#             */
+/*   Updated: 2023/10/04 09:40:23 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -323,7 +323,7 @@ typedef struct mlx_key_data
 	action_t		action;
 	int32_t			os_key;
 	modifier_key_t	modifier;
-}	mlx_key_data_t;
+}	mlx_key_t_data;
 
 /**
  * An image with an individual buffer that can be rendered.
@@ -438,7 +438,7 @@ typedef void (*mlx_cursorfunc)(double xpos, double ypos, void* param);
  * @param[in] keydata The callback data, contains info on key, action, ...
  * @param[in] param Additional parameter to pass on to the function.
  */
-typedef void (*mlx_keyfunc)(mlx_key_data_t keydata, void* param);
+typedef void (*mlx_keyfunc)(mlx_key_t_data keydata, void* param);
 
 /**
  * Callback function used to handle window resizing.

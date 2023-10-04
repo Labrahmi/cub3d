@@ -1,14 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   drawing_tools.c                                    :+:      :+:    :+:   */
+/*   draw_fov_tool.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 15:34:40 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/09/24 12:01:29 by ayakoubi         ###   ########.fr       */
+/*   Created: 2023/10/03 18:29:07 by ylabrahm          #+#    #+#             */
+/*   Updated: 2023/10/03 18:29:40 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "cub3d.h"
 
+float	normalize_angle(float angle)
+{
+	angle = fmod(angle, 360.0f);
+	if (angle < 0)
+		angle += 360.0f;
+	return (angle);
+}

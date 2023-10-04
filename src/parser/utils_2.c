@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:04:38 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 10:56:25 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/04 09:45:58 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	split_color(t_data_maps *data, char *line, char c)
 		if (tmp[i])
 		{
 			if (c == 'F')
-				data->F[i] = ft_atoi(tmp[i]);
+				data->f[i] = ft_atoi(tmp[i]);
 			else
-				data->C[i] = ft_atoi(tmp[i]);
+				data->c[i] = ft_atoi(tmp[i]);
 		}
 	}
 	return (free(line), free_2d_array(tmp), TRUE);

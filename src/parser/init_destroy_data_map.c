@@ -6,7 +6,7 @@
 /*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 11:10:27 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 15:45:32 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/04 09:45:58 by ayakoubi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	init_data_map(t_data_maps *data)
 	i = -1;
 	while (++i < 3)
 	{
-		data->F[i] = -1;
-		data->C[i] = -1;
+		data->f[i] = -1;
+		data->c[i] = -1;
 	}
 	data->map = malloc(sizeof(char *) * 1);
 	data->posplayer = malloc(sizeof(t_corMap));
