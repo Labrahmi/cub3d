@@ -1,7 +1,7 @@
-SO  ./assets/i1.png
-NO  ./assets/i2.png
-WE  ./assets/i4.png
-EA  ./assets/i3.png
+SO  ./assets/wall_1.png
+NO  ./assets/wall_2.png
+WE  ./assets/wall_4.png
+EA  ./assets/wall_3.png
 
 C 128, 128, 255
 F 50, 50, 50

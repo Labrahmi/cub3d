@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 19:18:27 by ayakoubi          #+#    #+#             */
-/*   Updated: 2022/10/15 12:42:10 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/04 19:45:42 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!p)
 		return (0);
 	while (p[i] && ft_cheack(set, p[i]))
-			i++;
+		i++;
 	while (lens > 0 && ft_cheack(set, p[lens]))
 		lens--;
 	new = ft_substr(p, i, lens - i + 1);

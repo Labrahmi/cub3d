@@ -3,25 +3,25 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+         #
+#    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/10/04 11:43:47 by ayakoubi         ###   ########.fr        #
+#    Updated: 2023/10/04 19:44:23 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 ########## NAMES ##############
 NAME	= cub3D
 INC		= inc 
-IMLX	= -I MLX42/include
+IMLX	= -I $(HOME)/MLX42/include
 
 ########## COMMPILATION ##############
 CC = cc
-MLX = MLX42/build/libmlx42.a
+MLX = $(HOME)/MLX42/build/libmlx42.a
 FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit
 GLFW = -I include -lglfw -L"/goinfre/$(USER)/homebrew/opt/glfw/lib/"
-ARCH = MLX42/build/libmlx42.a
-CFLAGS =  -Wall -Wextra -Werror #-fsanitize=address -g
+ARCH = $(HOME)/MLX42/build/libmlx42.a
+CFLAGS =  -Wall -Wextra -Werror
 
 ######### SRCS & OBJS ###############
 SRCDIR	 	=	src
