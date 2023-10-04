@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 11:54:28 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/04 09:48:28 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/04 23:13:59 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	calculate_res(char **map, int mode)
 		if (i == 0)
 			max = ft_strlen(map[i]);
 		if ((int)ft_strlen(map[i]) > max)
-			max = strlen(map[i]);
+			max = ft_strlen(map[i]);
 		i++;
 	}
 	if (mode == 1)

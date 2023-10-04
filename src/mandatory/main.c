@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 07:30:15 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/10/04 10:05:16 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/04 23:12:49 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	func(char **av, t_data *data)
+void	check_data_map(char **av, t_data *data)
 {
 	t_data_maps	data_map;
 	int			fd;
@@ -51,12 +51,11 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (1);
 	if (check_extantion(av[1]) == FALSE)
-		return (printf("Error\n"), 1);
+		return (ft_printf("Error\n"), 1);
 	data = malloc(sizeof(t_data));
-	func(av, data);
+	check_data_map(av, data);
 	ft_hooks(data);
 	mlx_loop(data->mlx);
 	mlx_terminate(data->mlx);
-	system("clear");
 	return (free(data), EXIT_SUCCESS);
 }

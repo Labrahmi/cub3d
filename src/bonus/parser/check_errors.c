@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 10:53:24 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/04 09:45:58 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/04 22:57:17 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	check_errors(t_data_maps *data)
 {
 	if (check_errors_textures(data->textures) == FALSE)
-		return (printf("Error in textures !\n"), FALSE);
+		return (ft_printf("Error in textures !\n"), FALSE);
 	if (check_path_textures(data->textures) == FALSE)
-		return (printf("Error in PATH textures !\n"), FALSE);
+		return (ft_printf("Error in PATH textures !\n"), FALSE);
 	if (check_errors_colors(data) == FALSE)
-		return (printf("Error in colors !\n"), FALSE);
+		return (ft_printf("Error in colors !\n"), FALSE);
 	if (check_errors_map(data) == FALSE)
-		return (printf("Error in map !\n"), FALSE);
+		return (ft_printf("Error in map !\n"), FALSE);
 	return (TRUE);
 }
 

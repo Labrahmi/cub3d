@@ -6,7 +6,7 @@
 /*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 08:30:09 by ylabrahm          #+#    #+#             */
-/*   Updated: 2023/10/04 19:56:44 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2023/10/04 23:04:56 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <limits.h>
 # include <fcntl.h>
 # include "../gnl/get_next_line.h"
+# include "../ft_printf/ft_printf.h"
 # include "../libft/libft.h"
 
 // ============     PARSER  =============

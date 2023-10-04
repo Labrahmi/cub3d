@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayakoubi <ayakoubi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 10:53:45 by ayakoubi          #+#    #+#             */
-/*   Updated: 2023/10/02 15:25:18 by ayakoubi         ###   ########.fr       */
+/*   Updated: 2023/10/04 22:57:17 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	get_color(char *line, t_data_maps *data, int *pos)
 		{
 			if (split_color(data, line, 'F') == FALSE)
 			{
-				printf("Error in color F !\n"); 
+				ft_printf("Error in color F !\n"); 
 				return (free(line), free_2d_array(tmp), FALSE);
 			}
 		}
@@ -85,7 +85,7 @@ int	get_color(char *line, t_data_maps *data, int *pos)
 		{
 			if (split_color(data, line, 'C') == FALSE)
 			{
-				printf("Error in color C !\n");
+				ft_printf("Error in color C !\n");
 				return (free(line), free_2d_array(tmp), FALSE);
 			}
 		}

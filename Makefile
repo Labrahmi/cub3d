@@ -6,7 +6,7 @@
 #    By: ylabrahm <ylabrahm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/29 07:29:28 by ylabrahm          #+#    #+#              #
-#    Updated: 2023/10/04 22:45:54 by ylabrahm         ###   ########.fr        #
+#    Updated: 2023/10/04 23:03:59 by ylabrahm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,10 +62,11 @@ RESET = \033[0m
 
 C_LIBFT         =       make -C libft
 C_GNL           =       make -C gnl
-
+C_PRINTF		=		make -C ft_printf
 
 AR_LIBFT        =       libft/libft.a
 AR_GNL          =       gnl/get_next_line
+AR_PRINTF		=		ft_printf/libftprintf.a
 
 
 #########	COMPILATION & FLAGS	##########e
@@ -95,8 +96,9 @@ $(NAME):	$(OBJ) $(PARSEROBJ)
 	@echo "$(GREEN)$(BOLD)Creating >>>>>> $(AR_LIBFT)$(B_END)$(C_END)"
 	@$(C_GNL) -s
 	@echo "$(GREEN)$(BOLD)Creating >>>>>>>$(AR_GNL)$(B_END)$(C_END)"
-	@$(C_MLX)
-	@$(CC) $(CFLAGS) $(FRAMEWORKS) $(GLFW) $^ $(AR_LIBFT) $(AR_GNL) $(ARCH) -I $(INC) $(IMLX) -o $@
+	@$(C_PRINTF) -s
+	@echo "$(GREEN)$(BOLD)Creating >>>>>>>$(AR_PRINTF)$(B_END)$(C_END)"
+	@$(CC) $(CFLAGS) $(FRAMEWORKS) $(GLFW) $^ $(AR_LIBFT) $(AR_GNL) $(AR_PRINTF) $(ARCH) -I $(INC) $(IMLX) -o $@
 	@echo "  $(GREEN) $(BOLD) <<<<<< Done successful! >>>>>>$(B_END) $(C_END)"
 
 bonus : $(BONUS)
@@ -107,14 +109,16 @@ $(BONUS):	$(OBJBONUS) $(PARSEROBJBONUS)
 	@echo "$(GREEN)$(BOLD)Creating >>>>>> $(AR_LIBFT)$(B_END)$(C_END)"
 	@$(C_GNL) -s
 	@echo "$(GREEN)$(BOLD)Creating >>>>>>>$(AR_GNL)$(B_END)$(C_END)"
-	@$(C_MLX)
-	@$(CC) $(CFLAGS) $(FRAMEWORKS) $(GLFW) $^ $(AR_LIBFT) $(AR_GNL) $(ARCH) -I $(INC) $(IMLX) -o $@
+	@$(C_PRINTF) -s
+	@echo "$(GREEN)$(BOLD)Creating >>>>>>>$(AR_PRINTF)$(B_END)$(C_END)"
+	@$(CC) $(CFLAGS) $(FRAMEWORKS) $(GLFW) $^ $(AR_LIBFT) $(AR_GNL) $(AR_PRINTF) $(ARCH) -I $(INC) $(IMLX) -o $@
 	@echo "  $(GREEN) $(BOLD) <<<<<< Done successful! >>>>>>$(B_END) $(C_END)"
 
 clean:
 	@echo " $(RED)$(BOLD)REMOVED OBJECTS$(B_END)$(C_END)"
 	@$(C_LIBFT) clean
 	@$(C_GNL) clean
+	@$(C_PRINTF) clean
 	@rm -rf $(OBJDIR)
 	@rm -rf $(OBJBON)
 	
@@ -123,6 +127,7 @@ fclean: clean
 	@rm -rf $(BONUS)
 	@$(C_LIBFT) fclean
 	@$(C_GNL) fclean
+	@$(C_PRINTF) fclean
 	@echo "$(RED)$(BOLD)removed $(AR_LIBFT)\nremoved $(NAME)$(B_END)$(C_END)"
 
 re:	fclean all
